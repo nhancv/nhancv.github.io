@@ -1888,5 +1888,13 @@ button,
     margin: 1em 0 0 0; }
     #footer .copyright li:first-child {
       margin-top: 0; } }
+.alert-fixed {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9999;
+  border-radius: 0px;
+  text-align: center; }
 
 /*# sourceMappingURL=main.css.map */

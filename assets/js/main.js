@@ -1,32 +1,56 @@
+function isValidEmailAddress(emailAddress) {
+    var pattern = new RegExp(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/);
+    return pattern.test(emailAddress);
+};
+
+function show_alert(elem, message, timeout, style) {
+    $(elem).removeClass('alert-warning', 'alert-danger', 'alert-success');
+    $(elem).addClass(style);
+    $(elem).html('<strong>' + message + '</strong>');
+    $(elem).fadeTo(timeout, 500).slideUp(500, function () {
+        $(elem).hide();
+    });
+}
 $('#btnSendEmail').click(function () {
 
-    var name=$('#name').val();
-    var email=$('#email').val();
-    var msg=$('#msg').val();
+    var name = $('#name').val();
+    var email = $('#email').val();
+    var msg = $('#msg').val();
 
+    if(!isValidEmailAddress(email)){
+        show_alert('#form_alert', 'Check email please!', 900, 'alert-warning');
+        return;
+    }
+
+    if (name == '' || email == '' || msg == '') {
+        show_alert('#form_alert', 'Name, email and message not empty!', 1300, 'alert-warning');
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "https://mandrillapp.com/api/1.0/messages/send.json",
         data: {
             'key': '1wm81takVDEbZbzxivR9zg',
             'message': {
-                'from_email': 'caovannhan2002@gmail.com',
+                'from_email': 'nhancv@yeskone.com',
                 'to': [
                     {
-                        'email': 'nhancv@yeskone.com',
+                        'email': 'caovannhan2002@gmail.com',
                         'name': 'Nhan Cao',
                         'type': 'to'
                     }
                 ],
                 'autotext': 'true',
-                'subject': 'cvnhan.github.io',
+                'subject': 'cvnhan.github.io - ' + name + ' - ' + email,
                 'html': msg
             }
         }
     }).done(function (response) {
-        console.log(response);
+        //console.log(response);
+        show_alert('#form_alert', 'Sent successfully', 1000, 'alert-success');
     }).fail(function (error) {
-        console.log(error);
+        //console.log(error);
+        show_alert('#form_alert', 'Sent error', 1000, 'alert-danger');
     }).always(function () {
 
     });
