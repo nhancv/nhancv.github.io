@@ -1,0 +1,590 @@
+<html><head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="style.css" rel="stylesheet" type="text/css">
+    </head><body>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>
+                            <b>Basic</b>
+                        </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Observable</h2>
+                            <p>In ReactiveX an observer subscribes to an Observable. Then that observer
+                                reacts to whatever item or sequence of items the Observable emits.&nbsp;Use
+                                three methods to subscribe
+                                <br>onNext
+                                <br>onError
+                                <br>onCompleted
+                                <br>
+                            </p>
+                        </div>
+                        <img src="http://reactivex.io/assets/operators/legend.png" class="img-responsive img-thumbnail">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Observer</h2>
+                            <p>An observer subscribes to an Observable. An Observable emits items or
+                                sends notifications to its observers by calling the observers’ methods.</p>
+                        </div>
+                        <img src="https://www.joezimjs.com/wp-content/uploads/observer_structure.png" class="img-responsive img-thumbnail">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>PublishSubject</h2>
+                            <p>PublishSubject emits to an observer only those items that are emitted
+                                by the source Observable(s) subsequent to the time of the subscription.</p>
+                        </div>
+                        <img src="http://reactivex.io/documentation/operators/images/S.PublishSubject.png" class="img-responsive img-thumbnail" style="width: 500;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Single</h2>
+                            <p>A Single is something like an Observable, but it always either emits one
+                                value or an error notification with&nbsp;only use two methods to subscribe
+                                <br>onSuccess
+                                <br>onError</p>
+                        </div>
+                        <img src="https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/Single.legend.png" class="img-responsive img-thumbnail">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Scheduler</h2>
+                            <p>-&nbsp;The&nbsp;SubscribeOn&nbsp;operator designates which thread the
+                                Observable will begin operating on.
+                                <br>- The ObserveOn operator specifies a different Scheduler that the Observable
+                                will use to send notifications to its observers.</p>
+                        </div>
+                        <h3 contenteditable="true">Varieties of Scheduler</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Scheduler</th>
+                                    <th>purpose</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Schedulers.computation( )</td>
+                                    <td>meant for computational work such as event-loops and callback processing;
+                                        do not use this scheduler for I/O (use Schedulers.io( ) instead); the number
+                                        of threads, by default, is equal to the number of processors</td>
+                                </tr>
+                                <tr>
+                                    <td>Schedulers.from(executor)</td>
+                                    <td>uses the specified Executor as a Scheduler</td>
+                                </tr>
+                                <tr>
+                                    <td>Schedulers.immediate( )</td>
+                                    <td>schedules work to begin immediately in the current thread</td>
+                                </tr>
+                                <tr>
+                                    <td>Schedulers.io( )</td>
+                                    <td>meant for I/O-bound work such as asynchronous performance of blocking
+                                        I/O, this scheduler is backed by a thread-pool that will grow as needed</td>
+                                </tr>
+                                <tr>
+                                    <td>Schedulers.newThread( )</td>
+                                    <td>creates a new thread for each unit of work</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <img src="http://reactivex.io/documentation/operators/images/schedulers.png" class="img-responsive img-thumbnail" style="width: 500;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>
+                            <b>Operators &amp; Usages/Scenarios</b>
+                        </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 contenteditable="true">Creating Observables</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>create</td>
+                                    <td>create an Observable from scratch by calling observer methods programmatically</td>
+                                </tr>
+                                <tr>
+                                    <td>defer</td>
+                                    <td>do not create the Observable until the observer subscribes, and create
+                                        a fresh Observable for each observer</td>
+                                </tr>
+                                <tr>
+                                    <td>just</td>
+                                    <td>convert an object or a set of objects into an Observable that emits that
+                                        or those objects</td>
+                                </tr>
+                                <tr>
+                                    <td>from</td>
+                                    <td>convert some other object or data structure into an Observable</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Transforming Observables</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                    <th>Code snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>map</td>
+                                    <td>Transform the items emitted by an Observable by applying a function to
+                                        each item</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.map(integer -&gt; integer *&nbsp;2) .subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out
+                                        <b>:&nbsp;</b>
+                                        <br>2
+                                        <br>&nbsp;4
+                                        <br>&nbsp;6</td>
+                                </tr>
+                                <tr>
+                                    <td>flatmap</td>
+                                    <td>Transform the items emitted by an Observable into Observables, then flatten
+                                        the emissions from those into a single Observable</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.flatMap(integer -&gt;&nbsp;Observable.range(4,2)) .subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>4&nbsp;
+                                        <br>5
+                                        <br>4&nbsp;
+                                        <br>5&nbsp;
+                                        <br>4
+                                        <br>5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Filtering Observables</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                    <th>Code snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>debounce</td>
+                                    <td>Only emit an item from an Observable if a particular timespan has passed
+                                        without it emitting another item</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.debounce(1,&nbsp;TimeUnit.SECONDS) .subscribe(System.out::println);</td>
+                                </tr>
+                                <tr>
+                                    <td>distinct</td>
+                                    <td>Suppress duplicate items emitted by an Observable</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 1, 3))&nbsp;
+                                        <br>.distinct()&nbsp;
+                                        <br>.subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>1&nbsp;
+                                        <br>3</td>
+                                </tr>
+                                <tr>
+                                    <td>elementAt</td>
+                                    <td>Emit only item n emitted by an Observable</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))
+                                        <br>.elementAt(1)&nbsp;
+                                        <br>.subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>2</td>
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>Emit only those items from an Observable that pass a predicate test</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.filter(integer -&gt; integer &gt; 2) .subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>3</td>
+                                </tr>
+                                <tr>
+                                    <td>first</td>
+                                    <td>Emit only the first item, or the first item that meets a condition, from
+                                        an Observable</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.first(integer -&gt; integer &gt; 2) .subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>3</td>
+                                </tr>
+                                <tr>
+                                    <td>last</td>
+                                    <td>Emit only the last item emitted by an Observable</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.last()&nbsp;
+                                        <br>.subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>3</td>
+                                </tr>
+                                <tr>
+                                    <td>skip</td>
+                                    <td>Suppress the first n items emitted by an Observable</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.skip(1)
+                                        <br>&nbsp;.subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>2&nbsp;
+                                        <br>3</td>
+                                </tr>
+                                <tr>
+                                    <td>skipLast</td>
+                                    <td>Suppress the last n items emitted by an Observable</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.skipLast(1)
+                                        <br>.subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>1&nbsp;
+                                        <br>2</td>
+                                </tr>
+                                <tr>
+                                    <td>take</td>
+                                    <td>Emit only the first n items emitted by an Observable</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.take(1)
+                                        <br>.subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>1</td>
+                                </tr>
+                                <tr>
+                                    <td>takeLast</td>
+                                    <td>Emit only the last n items emitted by an Observable</td>
+                                    <td>Observable.defer(() -&gt; Observable.just(1, 2, 3))&nbsp;
+                                        <br>.takeLast(1)&nbsp;
+                                        <br>.subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>3</td>
+                                </tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <h3>Combining Observables</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                    <th>Code snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>merge</td>
+                                    <td>Combine multiple Observables into one by merging their emissions</td>
+                                    <td>Observable.merge
+                                        <br>(
+                                        <br>Observable.just(1,2),&nbsp;
+                                        <br>Observable.just(3)
+                                        <br>)
+                                        <br>.subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>1&nbsp;
+                                        <br>2&nbsp;
+                                        <br>3</td>
+                                </tr>
+                                <tr>
+                                    <td>zip</td>
+                                    <td>Combine the emissions of multiple Observables together via a&nbsp;specified
+                                        function and&nbsp;
+                                        <br>emit single items for&nbsp;each&nbsp;combination based on the results
+                                        of this function</td>
+                                    <td>Observable.zip
+                                        <br>(
+                                        <br>Observable.just(1, 2),&nbsp;
+                                        <br>Observable.just(3, 4),&nbsp;
+                                        <br>(Func2
+                                        <integer, integer,="" object="">) (integer, integer2) -&gt; integer + " - " + integer2)
+                                            <br>&nbsp;.subscribe(System.out::println);&nbsp;
+                                            <br>
+                                            <br>Out:&nbsp;
+                                            <br>1 - 3&nbsp;
+                                            <br>2 - 4</integer,>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <h3>Conditional and Boolean Operators</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                    <th>Code snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>amb</td>
+                                    <td>Given two or more source Observables, emit all of the items from only
+                                        the first of
+                                        <br>&nbsp;these Observables to emit an item</td>
+                                    <td>Observable.amb
+                                        <br>(&nbsp;
+                                        <br>&nbsp; &nbsp; &nbsp; Observable.just(1).delay(1,&nbsp;TimeUnit.SECONDS),
+                                        <br>&nbsp; &nbsp; &nbsp; Observable.just(2, 3)
+                                        <br>)&nbsp;
+                                        <br>.subscribe(System.out::println);&nbsp;
+                                        <br>
+                                        <br>Out:&nbsp;
+                                        <br>2&nbsp;
+                                        <br>3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>
+                            <b>Useful Scenarios</b>
+                        </h1>
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Scenarios</th>
+                                        <th>Code snippet</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Avoid create Observable with just like below:
+                                            <br>public Observable
+                                            <string>valueObservable() {&nbsp;
+                                                <br>&nbsp; &nbsp; return&nbsp;Observable.just(value);&nbsp;
+                                                <br>}</string>
+                                            <br>Because&nbsp;just(), from(), and other Observable creation tools&nbsp;
+                                            <br>store the value of data when created,&nbsp;not when subscribed
+                                            <br>
+                                            <br>
+                                        </td>
+                                        <td>Sol1:
+                                            <br>public Observable
+                                            <string>valueObservable() {&nbsp;
+                                                <br>&nbsp; &nbsp; return Observable.create(subscriber -&gt; {&nbsp;
+                                                <br>&nbsp; &nbsp; &nbsp; &nbsp; subscriber.onNext(value);&nbsp;
+                                                <br>&nbsp; &nbsp; &nbsp; &nbsp; subscriber.onCompleted();&nbsp;
+                                                <br>&nbsp; &nbsp; });&nbsp;
+                                                <br>}</string>
+                                            <br>
+                                            <br>Sol2:
+                                            <br>public Observable
+                                            <string>valueObservable() {&nbsp;
+                                                <br>&nbsp; &nbsp; return Observable.defer(
+                                                <br>&nbsp; &nbsp; &nbsp; &nbsp; () -&gt;&nbsp;Observable.just(value)
+                                                <br>&nbsp; &nbsp; );&nbsp;
+                                                <br>}</string>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>How to make interceptor response with rxjava.&nbsp;
+                                            <br>Support if you want to catch the error and wrap it as&nbsp;difference
+                                            error type.&nbsp;</td>
+                                        <td>Observable.defer(() -&gt; service.listRepos("nhancv"))
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.observeOn(Schedulers.computation())&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//Interceptor on next&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.flatMap(Observable::just)&nbsp;
+                                            <br>
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//Interceptor on error&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.onErrorResumeNext(throwable -&gt; {&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Exception
+                                            exception = new Exception("new custom&nbsp;error");&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Log.e(TAG,
+                                            "call: " +&nbsp;throwable);&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return&nbsp;Observable.error(exception);&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;})&nbsp;
+                                            <br>
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//Final data
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.subscribeOn(Schedulers.io())&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.observeOn(AndroidSchedulers.mainThread())
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.subscribe(repoList -&gt; {&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;updateText("Done:
+                                            " + repoList.size());&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}, throwable -&gt; {&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Log.e(TAG,
+                                            "fetchGithub: " + throwable);&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;});</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Example about call rest api</td>
+                                        <td>RxHelper.onStop(subscription);&nbsp;
+                                            <br>getView().showLoading();&nbsp;
+                                            <br>subscription = accountService
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; .register(registerRequest)&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; .compose(RxHelper.applyIOSchedulers())&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; .doOnTerminate(() -&gt; getView().hideLoading())
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                            &nbsp; &nbsp;.subscribe(
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;user -&gt; getView().registerSuccessful(user),&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;throwable -&gt;&nbsp;getView().registerError(throwable)&nbsp;
+                                            <br>);</td>
+                                    </tr>
+                                    <tr>
+                                        <td>If you call api and do not care about response success,&nbsp;
+                                            <br>can use terminal error snippet code at right</td>
+                                        <td>subscription = accountService
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.logout()&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.compose(RxHelper.applyIOSchedulers())&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.doOnTerminate(()
+                                            -&gt; {&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp;accountService.setCurrentUser(null);&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp;getView().hideLoading();&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                                            &nbsp; &nbsp; &nbsp; &nbsp;getView().afterLogout();&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;})&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.onErrorResumeNext(throwable
+                                            -&gt; Observable.empty())&nbsp;
+                                            <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.subscribe();</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Ref</h2>
+                            <p>
+                                <a href="http://reactivex.io/">http://reactivex.io/</a>
+                                <br>
+                                <a href="http://reactivex.io/">http://rxmarbles.com/</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://github.com/ReactiveX/RxAndroid</a>
+                                <br>
+                                <a href="http://reactivex.io/">http://docs.couchbase.com/developer/java-2.0/observables.html</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://medium.com/crunching-rxandroid</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://medium.freecodecamp.com/rxandroid-and-retrofit-2-0-66dc52725fff</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://medium.com/swlh/party-tricks-with-rxjava-rxandroid-retrolambda-1b06ed7cd29c</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://blog.robinchutaux.com/blog/a-smart-way-to-use-retrofit/</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://blog.robinchutaux.com/blog/using-retrofit-with-activeandroid/</a>
+                                <br>
+                                <a href="http://reactivex.io/">http://blog.danlew.net/tag/rxjava/</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://realm.io/news/droidcon-gomez-functional-reactive-programming/</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://www.bignerdranch.com/blog/what-is-functional-reactive-programming/</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+</body></html>
