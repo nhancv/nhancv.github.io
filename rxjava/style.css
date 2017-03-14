@@ -13,6 +13,7 @@
  * }
 */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -6776,3 +6777,13 @@ body {
   background-attachment: fixed;
 }
 /* PINGENDO COMMENT DO NOT REMOVE */
+pre{
+  padding: 0;
+  margin: 0;
+  background-color: none;
+  border: none;
+}
+
+
+
+
