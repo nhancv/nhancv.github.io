@@ -141,22 +141,22 @@
 
         <!-- buttons -->
         <div class="btn-edit">
-            <button type="button" class="btn btn-default" ng-show="!tableform.$visible"
+            <button type="button" class="btn btn-primary" ng-show="!tableform.$visible"
                     ng-click="onEditClick(tableform)">
                 edit
             </button>
         </div>
         <div class="btn-form" ng-show="tableform.$visible">
-            <button type="button" ng-disabled="tableform.$waiting" ng-click="addOrder()" class="btn btn-default">
+            <button type="button" ng-disabled="tableform.$waiting" ng-click="addOrder()" class="btn btn-success">
                 add row
             </button>
             <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
             <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()"
-                    class="btn btn-default">
+                    class="btn btn-warning">
                 cancel
             </button>
             <button type="button" ng-disabled="tableform.$waiting" ng-click="clearAll(tableform)"
-                    class="btn btn-default">
+                    class="btn btn-danger">
                 clear all
             </button>
         </div>

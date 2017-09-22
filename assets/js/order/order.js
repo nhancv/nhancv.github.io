@@ -203,7 +203,7 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
     }
 
     function getTotalPrice() {
-        $scope.drinkPrice = 0;
+        $scope.totalPrice = 0;
         for (var key in $scope.summaryList) {
             $scope.totalPrice += $scope.summaryList[key].drinkPrice;
         }

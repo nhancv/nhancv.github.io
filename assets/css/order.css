@@ -21,7 +21,7 @@ p {
     text-align: justify
 }
 
-.editable-text, .editable-number {
+.editable-text, .editable-number, .editable-ui-select, .editable-input {
     width: 100%;
 }
 
