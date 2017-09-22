@@ -9,8 +9,6 @@
     <meta name="description" content="Order drinks">
     <meta name="author" content="Nhan Cao">
     <link rel="shortcut icon" href="favicon.ico">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic'
-          rel='stylesheet' type='text/css'>
     <!-- Global CSS -->
     <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
     <!-- Plugins CSS -->
@@ -44,17 +42,18 @@
 
 <body ng-controller="appController">
 
-<button ng-click="toggleMenu()">{{menuVisible?'CLOSE MENU':'OPEN MENU'}}</button>
-<button ng-click="toggleOrderList()">{{orderListVisible?'CLOSE ORDER-LIST':'OPEN ORDER-LIST'}}</button>
+<button class="btn btn-info" ng-click="toggleMenu()">{{menuVisible?'CLOSE MENU':'OPEN MENU'}}</button>
+<button class="btn btn-info" ng-click="toggleOrderList()">{{orderListVisible?'CLOSE ORDER-LIST':'OPEN ORDER-LIST'}}
+</button>
 <div ng-show="menuVisible">
     <br>
-    <p>
+    <div class="well">
         Menu: {{menuContact.title}}<br>
         Link: {{menuContact.link}}<br>
         Address: {{menuContact.address}}<br>
         Open time: {{menuContact.openTime}}<br>
         Phone: {{menuContact.phone}}<br>
-    </p>
+    </div>
 
     <div class="menu-table">
         <div class="tbl-header">
@@ -85,7 +84,8 @@
     <h3>ORDER LIST</h3>
     <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()" onbefore>
         <!-- table -->
-        <table class="table table-bordered table-hover table-condensed">
+        <table class="table table-hover table-condensed table-striped">
+            <thead>
             <tr style="font-weight: bold">
                 <td style="width:40%">Name</td>
                 <td style="width:30%">Drink</td>
@@ -93,6 +93,8 @@
                 <td style="width:30%">Quantity</td>
                 <td style="width:30%"><span>Action</span></td>
             </tr>
+            </thead>
+            <tbody>
             <tr ng-repeat="order in orderItems | filter:filterOrder">
                 <td>
                     <span editable-text="order.name" e-style="width:100%;" e-form="tableform"
@@ -137,6 +139,7 @@
                     </button>
                 </td>
             </tr>
+            </tbody>
         </table>
 
         <!-- buttons -->
@@ -164,26 +167,34 @@
     </form>
     <br>
 
-    <h3>SUMMARY</h3>
-    <br>
-    <table ng-show="menuVisible" class="table table-bordered table-hover table-condensed">
-        <tr style="font-weight: bold">
-            <td>STT</td>
-            <td>Drink name</td>
-            <td>Drink price</td>
-            <td>Order quantity</td>
-            <td>Order names</td>
-        </tr>
-        <tr ng-repeat="(key, order) in summaryList">
-            <td>{{$index + 1}}</td>
-            <td>{{order.drinkName}}</td>
-            <td>{{order.drinkPrice}}</td>
-            <td>{{order.orderQuantity}}</td>
-            <td>{{order.orderName}}</td>
-        </tr>
-    </table>
-    <h5>Total quantity: {{totalQuantity}}</h5>
-    <h5>Total price: {{totalPrice | fPrice}}</h5>
+    <div id="export">
+
+        <h3>SUMMARY</h3>
+        <br>
+        <table ng-show="menuVisible" class="table table-bordered table-hover table-condensed table-striped">
+            <thead>
+            <tr style="font-weight: bold">
+                <td>STT</td>
+                <td>Drink name</td>
+                <td>Drink price</td>
+                <td>Order quantity</td>
+                <td>Order names</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key, order) in summaryList">
+                <td>{{$index + 1}}</td>
+                <td>{{order.drinkName}}</td>
+                <td>{{order.drinkPrice}}</td>
+                <td>{{order.orderQuantity}}</td>
+                <td>{{order.orderName}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Total quantity: {{totalQuantity}}</h5>
+        <h5>Total price: {{totalPrice | fPrice}}</h5>
+    </div>
+    <button class="btn btn-info" ng-click="export()">Export</button>
     <br>
 </div>
 
@@ -195,7 +206,6 @@
     </div>
 </footer>
 
-
 <!-- Javascript -->
 <script type="text/javascript" src="assets/plugins/angular/angular.min.js"></script>
 <script type="text/javascript" src="assets/plugins/angular/ngStorage.min.js"></script>
@@ -205,9 +215,11 @@
 <link rel="stylesheet" href="assets/plugins/angular/angular-xeditable-0.8.0/xeditable.min.css">
 <script type="text/javascript" src="assets/plugins/angular/angular-xeditable-0.8.0/xeditable.min.js"></script>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.16.1/select.min.css" rel="stylesheet"
-      media="screen">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.16.1/select.min.js"></script>
+<link rel="stylesheet" href="assets/plugins/ui-select/ui-select.min.css" media="screen">
+<script type="text/javascript" src="assets/plugins/ui-select/ui-select.min.js"></script>
+
+<script type="text/javascript" src="assets/plugins/pdfmake.min.js"></script>
+<script type="text/javascript" src="assets/plugins/html2canvas.min.js"></script>
 
 <!-- custom js -->
 <script type="text/javascript" src="assets/js/order/order.js"></script>

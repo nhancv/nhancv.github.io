@@ -215,6 +215,22 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
         $scope.saveTable();
     }
 
+    //@nhancv TODO: Export to pdf
+    $scope.export = function(){
+        html2canvas(document.getElementById('export'), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500,
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("order.pdf");
+            }
+        });
+    }
+
 });
 
 
