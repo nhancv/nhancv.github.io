@@ -10,14 +10,28 @@ app.run(function (editableOptions) {
 });
 app.controller('appController', function ($scope, $localStorage, $sessionStorage, $filter, sUtil, menu) {
 
-    //@nhancv TODO: Toggle menu
-    $scope.menuVisible = true;
+    //@nhancv TODO: Toggle menu && order list
+    $localStorage.$default({
+        menuVisible: true,
+        orderListVisible: false
+    });
+
+    $scope.menuVisible = $localStorage.menuVisible;
+    $scope.orderListVisible = $localStorage.orderListVisible;
+
     $scope.toggleMenu = function () {
         $scope.menuVisible = !$scope.menuVisible;
+        $localStorage.menuVisible = $scope.menuVisible;
+    };
+
+    $scope.toggleOrderList = function () {
+        $scope.orderListVisible = !$scope.orderListVisible;
+        $localStorage.orderListVisible = $scope.orderListVisible;
     };
 
     //@nhancv TODO: Prepare menu
-    $scope.drinkItems = menu.sodo;
+    $scope.menuContact = menu.sodo.contact;
+    $scope.drinkItems = menu.sodo.details;
     $scope.getDrinkItemNames = function () {
         var arr = [];
         $scope.drinkItems.forEach(function (t) {
@@ -45,6 +59,11 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
     $scope.validateEmpty = function (data, id) {
         if (data === null || data === undefined) {
             return "Required"
+        }
+    };
+    $scope.validateQuantity = function (data, id) {
+        if (data === null || data === undefined || data === 0 || data > 100) {
+            return "0< Quantity <= 100"
         }
     };
 
@@ -107,6 +126,15 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
             }
         }
         summary();
+
+        $localStorage.orderItems = $scope.orderItems;
+
+    };
+
+    $scope.clearAll = function (form) {
+        $scope.orderItems = [];
+        $localStorage.orderItems = $scope.orderItems;
+        form.$submit();
     };
 
     $scope.onEditClick = function (form) {
@@ -127,23 +155,64 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
     //@nhancv TODO: Collect drink item
     function summary() {
         $scope.summaryList = {};
+
+        var groupItemUser = {};
         $scope.orderItems.forEach(function (t) {
-            if($scope.summaryList.hasOwnProperty(t.drinkName)){
+            if (!groupItemUser.hasOwnProperty(t.drinkName)) {
+                groupItemUser[t.drinkName] = {};
+            }
+            if(!groupItemUser[t.drinkName].hasOwnProperty(t.name)){
+                groupItemUser[t.drinkName][t.name] = 0;
+            }
+            groupItemUser[t.drinkName][t.name] += t.orderQuantity;
+
+
+            var orderNames = '';
+            for (var key in groupItemUser[t.drinkName]) {
+                orderNames += key + '(' + groupItemUser[t.drinkName][key] + ");";
+            }
+            if(orderNames.length > 0 && orderNames[orderNames.length-1] === ';'){
+                orderNames = orderNames.substr(0, orderNames.length -1);
+            }
+
+            if ($scope.summaryList.hasOwnProperty(t.drinkName)) {
                 var tmp = $scope.summaryList[t.drinkName];
-                tmp.orderQuantity +=1;
-                tmp.orderName += ',' + t.name;
-            }else{
+                tmp.orderQuantity += t.orderQuantity;
+                tmp.orderName = orderNames;
+            } else {
                 $scope.summaryList[t.drinkName] = {
                     drinkName: t.drinkName,
                     drinkPrice: t.drinkPrice,
                     orderQuantity: t.orderQuantity,
-                    orderName: t.name
+                    orderName: orderNames
                 };
             }
         });
+        getTotalPrice();
+        getTotalQuantity();
+    }
 
+    $scope.totalQuantity = 0;
+    $scope.totalPrice = 0;
 
-        console.log($scope.summaryList);
+    function getTotalQuantity() {
+        $scope.totalQuantity = 0;
+        for (var key in $scope.summaryList) {
+            $scope.totalQuantity += $scope.summaryList[key].orderQuantity;
+        }
+    }
+
+    function getTotalPrice() {
+        $scope.drinkPrice = 0;
+        for (var key in $scope.summaryList) {
+            $scope.totalPrice += $scope.summaryList[key].drinkPrice;
+        }
+    }
+
+    //@nhancv TODO: Restore from cache
+    if($localStorage.orderItems !== undefined){
+        $scope.orderItems = $localStorage.orderItems;
+        $scope.saveTable();
     }
 
 });
