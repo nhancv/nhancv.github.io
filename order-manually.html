@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>Nhan Cao</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Order drinks">
+    <meta name="author" content="Nhan Cao">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
+
+    <!-- Theme CSS -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #545E6C;
+            background: #f5f5f5;
+            font-size: 14px;
+            padding: 30px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 700;
+        }
+
+        p {
+            text-align: justify
+        }
+
+        .editable-text, .editable-number, .editable-ui-select, .editable-input {
+            width: 100%;
+        }
+
+        .menu-table table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .tbl-header {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .tbl-content {
+            height: 300px;
+            overflow-x: auto;
+            margin-top: 0px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .menu-table {
+            background-color: chocolate;
+        }
+
+        .menu-table th {
+            padding: 20px 15px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 12px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .menu-table td {
+            padding: 15px;
+            text-align: left;
+            vertical-align: middle;
+            font-weight: 300;
+            font-size: 12px;
+            color: #fff;
+            border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="assets/plugins/html5shiv.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-99584571-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body ng-controller="appController">
+
+<button class="btn btn-info" ng-click="toggleMenu()">{{menuVisible?'CLOSE MENU':'OPEN MENU'}}</button>
+<button class="btn btn-info" ng-click="toggleOrderList()">{{orderListVisible?'CLOSE ORDER-LIST':'OPEN ORDER-LIST'}}
+</button>
+<div ng-show="menuVisible">
+    <br>
+    <div class="well">
+        Menu: {{menuContact.title}}<br>
+        Link: {{menuContact.link}}<br>
+        Address: {{menuContact.address}}<br>
+        Open time: {{menuContact.openTime}}<br>
+        Phone: {{menuContact.phone}}<br>
+    </div>
+
+    <div class="menu-table">
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                <tr>
+                    <td>STT</td>
+                    <td>Name</td>
+                    <td>Price</td>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr ng-repeat="item in drinkItems">
+                    <td>{{$index + 1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.price}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br>
+</div>
+
+<div ng-show="orderListVisible">
+    <h3>ORDER LIST</h3>
+    <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()" onbefore>
+        <!-- table -->
+        <table class="table table-hover table-bordered table-condensed table-striped">
+            <thead>
+            <tr style="font-weight: bold">
+                <td style="width:40%">Name</td>
+                <td style="width:30%">Drink</td>
+                <td style="width:30%">Price</td>
+                <td style="width:30%">Quantity</td>
+                <td style="width:30%"><span>Action</span></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="order in orderItems | filter:filterOrder">
+                <td>
+                    <span editable-text="order.name" e-style="width:100%;" e-form="tableform"
+                          onbeforesave="validateEmpty($data, order.id)">
+                        {{ order.name || 'empty' }}
+                    </span>
+                </td>
+                <td>
+                    <div editable-ui-select="order.drinkName"
+                         data-e-form="tableform"
+                         data-e-name="drinkName"
+                         e-ng-change="onDrinkSelect(order, $data)"
+                         name="drinkName"
+                         theme="bootstrap"
+                         data-e-ng-model="order.drinkName"
+                         data-e-style="min-width:300px;">
+                        {{order.drinkName || 'empty' }}
+                        <editable-ui-select-match placeholder="select drink">
+                            {{$select.selected}}
+                        </editable-ui-select-match>
+                        <editable-ui-select-choices
+                                repeat="item in getDrinkItemNames() | fDrinkSearch: $select.search track by $index">
+                            {{item}}
+                        </editable-ui-select-choices>
+                    </div>
+                </td>
+                <td>
+                     <span editable-number="order.drinkPrice" e-form="tableform">
+                        {{(order.drinkPrice | fPrice) || 'empty'}}
+                    </span>
+                </td>
+                <td>
+                     <span editable-number="order.orderQuantity" e-form="tableform"
+                           onbeforesave="validateQuantity($data)">
+                        {{(order.orderQuantity) || 'empty'}}
+                    </span>
+                </td>
+                <td>
+                    <button ng-show="tableform.$visible" type="button" ng-show="tableform.$visible"
+                            ng-click="deleteOrder(order.id)"
+                            class="btn btn-danger pull-right">REMOVE
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- buttons -->
+        <div class="btn-edit">
+            <button type="button" class="btn btn-primary" ng-show="!tableform.$visible"
+                    ng-click="onEditClick(tableform)">
+                edit
+            </button>
+        </div>
+        <div class="btn-form" ng-show="tableform.$visible">
+            <button type="button" ng-disabled="tableform.$waiting" ng-click="addOrder()" class="btn btn-success">
+                add row
+            </button>
+            <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
+            <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()"
+                    class="btn btn-warning">
+                cancel
+            </button>
+            <button type="button" ng-disabled="tableform.$waiting" ng-click="clearAll(tableform)"
+                    class="btn btn-danger">
+                clear all
+            </button>
+        </div>
+
+    </form>
+    <br>
+
+    <div id="export">
+
+        <h3>SUMMARY</h3>
+        <br>
+        <table ng-show="menuVisible" class="table table-bordered table-hover table-condensed table-striped">
+            <thead>
+            <tr style="font-weight: bold">
+                <td>STT</td>
+                <td>Drink name</td>
+                <td>Drink price</td>
+                <td>Order quantity</td>
+                <td>Order names</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key, order) in summaryList">
+                <td>{{$index + 1}}</td>
+                <td>{{order.drinkName}}</td>
+                <td>{{order.drinkPrice}}</td>
+                <td>{{order.orderQuantity}}</td>
+                <td>{{order.orderName}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <h5>Total quantity: {{totalQuantity}}</h5>
+        <h5>Total price: {{totalPrice | fPrice}}</h5>
+    </div>
+    <button class="btn btn-info" ng-click="export()">Export</button>
+    <br>
+</div>
+
+<footer class="footer">
+    <div class="text-center">
+        <small>---- Nhan Cao ----</small>
+        <br>
+        <hr>
+    </div>
+</footer>
+
+<!-- Javascript -->
+<script type="text/javascript" src="assets/plugins/angular/angular.min.js"></script>
+<script type="text/javascript" src="assets/plugins/angular/ngStorage.min.js"></script>
+<script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="assets/plugins/angular/angular-xeditable-0.8.0/xeditable.min.css">
+<script type="text/javascript" src="assets/plugins/angular/angular-xeditable-0.8.0/xeditable.min.js"></script>
+
+<link rel="stylesheet" href="assets/plugins/ui-select/ui-select.min.css" media="screen">
+<script type="text/javascript" src="assets/plugins/ui-select/ui-select.min.js"></script>
+
+<script type="text/javascript" src="assets/plugins/pdfmake.min.js"></script>
+<script type="text/javascript" src="assets/plugins/html2canvas.min.js"></script>
+
+<!-- custom js -->
+<script>
+    'use strict';
+    var app = angular.module('app', ['ngStorage', 'xeditable', 'ui.select', 'app.models', 'app.services', 'app.filters']);
+    app.config(function (uiSelectConfig) {
+        uiSelectConfig.theme = 'bootstrap';
+        uiSelectConfig.resetSearchInput = true;
+        uiSelectConfig.appendToBody = true;
+    });
+    app.run(function (editableOptions) {
+        editableOptions.theme = 'bs3';
+    });
+    app.controller('appController', function ($scope, $localStorage, $sessionStorage, $filter, sUtil, menu) {
+
+        //@nhancv TODO: Toggle menu && order list
+        $localStorage.$default({
+            menuVisible: true,
+            orderListVisible: false
+        });
+
+        $scope.menuVisible = $localStorage.menuVisible;
+        $scope.orderListVisible = $localStorage.orderListVisible;
+
+        $scope.toggleMenu = function () {
+            $scope.menuVisible = !$scope.menuVisible;
+            $localStorage.menuVisible = $scope.menuVisible;
+        };
+
+        $scope.toggleOrderList = function () {
+            $scope.orderListVisible = !$scope.orderListVisible;
+            $localStorage.orderListVisible = $scope.orderListVisible;
+        };
+
+        //@nhancv TODO: Prepare menu
+        $scope.menuContact = menu.sodo.contact;
+        $scope.drinkItems = menu.sodo.details;
+        $scope.getDrinkItemNames = function () {
+            var arr = [];
+            $scope.drinkItems.forEach(function (t) {
+                arr.push(t.name);
+            });
+            return arr;
+        };
+
+        $scope.getDrinkItemPrice = function (name) {
+            for (var i = 0; i < $scope.drinkItems.length; i++) {
+                var t = $scope.drinkItems[i];
+                if (t.name === name) {
+                    return t.price;
+                }
+            }
+            return 20;
+        };
+
+        //@nhancv TODO: Handle update order list
+        $scope.orderItems = [];
+        $scope.onDrinkSelect = function (order, data) {
+            order.drinkPrice = $scope.getDrinkItemPrice(data);
+        };
+
+        $scope.validateEmpty = function (data, id) {
+            if (data === null || data === undefined) {
+                return "Required"
+            }
+        };
+        $scope.validateQuantity = function (data, id) {
+            if (data === null || data === undefined || data === 0 || data > 100) {
+                return "0< Quantity <= 100"
+            }
+        };
+
+        // filter orderItems to show
+        $scope.filterOrder = function (order) {
+            return order.isDeleted !== true;
+        };
+
+        // mark order as deleted
+        $scope.deleteOrder = function (id) {
+            var filtered = $filter('filter')($scope.orderItems, {id: id});
+            if (filtered.length) {
+                filtered[0].isDeleted = true;
+            }
+        };
+
+        // add order
+        $scope.addOrder = function () {
+            $scope.orderItems.push({
+                id: $scope.orderItems.length + 1,
+                name: '',
+                drinkName: null,
+                drinkPrice: null,
+                orderQuantity: 1,
+                isNew: true
+            });
+        };
+
+        // cancel all changes
+        $scope.cancel = function () {
+            for (var i = $scope.orderItems.length; i--;) {
+                var order = $scope.orderItems[i];
+                // undelete
+                if (order.isDeleted) {
+                    delete order.isDeleted;
+                }
+                // remove new
+                if (order.isNew) {
+                    $scope.orderItems.splice(i, 1);
+                }
+            }
+        };
+
+        // save edits
+        $scope.saveTable = function () {
+            for (var i = $scope.orderItems.length; i--;) {
+                var order = $scope.orderItems[i];
+                // actually delete order
+                if (order.isDeleted) {
+                    $scope.orderItems.splice(i, 1);
+                }
+                // mark as not new
+                if (order.isNew) {
+                    order.isNew = false;
+                }
+                if (order.name === null || order.name === undefined || order.name.length === 0 ||
+                    order.drinkName === null || order.drinkName === undefined || order.drinkName.length === 0 ||
+                    order.drinkName === null || order.drinkName === undefined) {
+                    $scope.orderItems.splice(i, 1);
+                }
+            }
+            summary();
+
+            $localStorage.orderItems = $scope.orderItems;
+
+        };
+
+        $scope.clearAll = function (form) {
+            $scope.orderItems = [];
+            $localStorage.orderItems = $scope.orderItems;
+            form.$submit();
+        };
+
+        $scope.onEditClick = function (form) {
+            form.$show();
+            $scope.addOrder();
+        };
+
+        //@nhancv TODO: Summary
+        $scope.summaryList = {};
+        /*************************************************
+         * item: {
+     *  drinkName
+     *  drinkPrice
+     *  orderQuantity
+     *  orderName
+     * }
+         */
+        //@nhancv TODO: Collect drink item
+        function summary() {
+            $scope.summaryList = {};
+
+            var groupItemUser = {};
+            $scope.orderItems.forEach(function (t) {
+                if (!groupItemUser.hasOwnProperty(t.drinkName)) {
+                    groupItemUser[t.drinkName] = {};
+                }
+                if(!groupItemUser[t.drinkName].hasOwnProperty(t.name)){
+                    groupItemUser[t.drinkName][t.name] = 0;
+                }
+                groupItemUser[t.drinkName][t.name] += t.orderQuantity;
+
+
+                var orderNames = '';
+                for (var key in groupItemUser[t.drinkName]) {
+                    orderNames += key + '(' + groupItemUser[t.drinkName][key] + ");";
+                }
+                if(orderNames.length > 0 && orderNames[orderNames.length-1] === ';'){
+                    orderNames = orderNames.substr(0, orderNames.length -1);
+                }
+
+                if ($scope.summaryList.hasOwnProperty(t.drinkName)) {
+                    var tmp = $scope.summaryList[t.drinkName];
+                    tmp.orderQuantity += t.orderQuantity;
+                    tmp.orderName = orderNames;
+                } else {
+                    $scope.summaryList[t.drinkName] = {
+                        drinkName: t.drinkName,
+                        drinkPrice: t.drinkPrice,
+                        orderQuantity: t.orderQuantity,
+                        orderName: orderNames
+                    };
+                }
+            });
+            getTotalPrice();
+            getTotalQuantity();
+        }
+
+        $scope.totalQuantity = 0;
+        $scope.totalPrice = 0;
+
+        function getTotalQuantity() {
+            $scope.totalQuantity = 0;
+            for (var key in $scope.summaryList) {
+                $scope.totalQuantity += $scope.summaryList[key].orderQuantity;
+            }
+        }
+
+        function getTotalPrice() {
+            $scope.totalPrice = 0;
+            for (var key in $scope.summaryList) {
+                $scope.totalPrice += $scope.summaryList[key].drinkPrice;
+            }
+        }
+
+        //@nhancv TODO: Restore from cache
+        if($localStorage.orderItems !== undefined){
+            $scope.orderItems = $localStorage.orderItems;
+            $scope.saveTable();
+        }
+
+        //@nhancv TODO: Export to pdf
+        $scope.export = function(){
+            html2canvas(document.getElementById('export'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500,
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("order.pdf");
+                }
+            });
+        }
+
+    });
+
+
+    jQuery(document).ready(function ($) {
+
+        $(window).on('load', function () {
+        });
+    });
+
+    angular.module('app.models', [])
+
+        .constant("menu", {
+            sodo: {
+                contact: {
+                    title: "Số đỏ",
+                    link: 'https://www.foody.vn/ho-chi-minh/so-do-cafe-tra-sua-truong-chinh',
+                    address: '558 Trường Chinh, P. 13,  Quận Tân Bình, TP. HCM',
+                    openTime: '08:00 - 22:00',
+                    phone: '0966 718 221'
+                },
+                details:
+                    [
+                        {
+                            name: 'Trà sữa thập cẩm',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà sữa thập cẩm & bánh flan trứng',
+                            price: 28
+                        },
+                        {
+                            name: 'Trà sữa bánh flan trứng',
+                            price: 23
+                        },
+                        {
+                            name: 'Trà sữa thạch phomai',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà sữa củ năng',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà sữa thạch dừa',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà sữa thạch socola',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà sữa trái cây',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà sữa trân châu',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà đào',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà sữa thạch khoai môn',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà sữa thạch củ sen',
+                            price: 20
+                        },
+                        {
+                            name: 'Trà sữa thạch phô mai viên',
+                            price: 30
+                        },
+                        {
+                            name: 'Trà sữa thạch ngọc trai',
+                            price: 25
+                        },
+                        {
+                            name: 'Trà vải',
+                            price: 20
+                        },
+                        {
+                            name: 'Hồng trà tắc',
+                            price: 12
+                        },
+                        {
+                            name: 'Hồng trà',
+                            price: 10
+                        },
+                        {
+                            name: 'Hồng trà thập cẩm',
+                            price: 20
+                        }
+                    ]
+            }
+        })
+
+    ;
+    angular.module('app.services', [])
+
+        .service('sUtil', function () {
+            this.convertViToEn = function (alias) {
+                var str = alias;
+                str = str.toLowerCase();
+                str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                str = str.replace(/đ/g, "d");
+                return str;
+            };
+
+            this.compareVi = function (base, search) {
+                return this.convertViToEn(base).indexOf(this.convertViToEn(search)) !== -1;
+            }
+        })
+
+
+    ;
+    angular.module('app.filters', [])
+
+        .filter('fPrice', function () {
+            return function (p) {
+                if(p !== undefined && p !== null){
+                    return p + "k (VND)"
+                }
+                return p;
+            }
+        })
+        .filter('fDrinkSearch', function (sUtil) {
+            return function (arr, search) {
+                var filtered = [];
+                if (search === undefined || arr === undefined) {
+                    return arr;
+                }
+                if (search.length === 0) return arr;
+                angular.forEach(arr, function (item) {
+                    if (sUtil.compareVi(item, search)) {
+                        filtered.push(item);
+                    }
+                });
+                if(filtered.length === 0) {
+                    filtered.push(search);
+                }
+                return filtered;
+            };
+        })
+
+    ;
+
+
+</script>
+
+</body>
+</html> 
+

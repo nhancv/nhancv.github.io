@@ -207,6 +207,24 @@
 </footer>
 
 <!-- Javascript -->
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        "rules": {
+            ".read": true,
+            ".write": true
+        },
+        apiKey: "AIzaSyCqX7JdbnjkmxDxq6Yps0dkfkd_Wm9zE60",
+        authDomain: "drink-order.firebaseapp.com",
+        databaseURL: "https://drink-order.firebaseio.com",
+        projectId: "drink-order",
+        storageBucket: "",
+        messagingSenderId: "695508235343"
+    };
+    firebase.initializeApp(config);
+</script>
+
 <script type="text/javascript" src="assets/plugins/angular/angular.min.js"></script>
 <script type="text/javascript" src="assets/plugins/angular/ngStorage.min.js"></script>
 <script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>
@@ -222,7 +240,7 @@
 <script type="text/javascript" src="assets/plugins/html2canvas.min.js"></script>
 
 <!-- custom js -->
-<script type="text/javascript" src="assets/js/order/order.js"></script>
+<script type="text/javascript" src="assets/js/order/order-on.js"></script>
 <script type="text/javascript" src="assets/js/order/models.js"></script>
 <script type="text/javascript" src="assets/js/order/services.js"></script>
 <script type="text/javascript" src="assets/js/order/filters.js"></script>
