@@ -42,6 +42,41 @@
 
 <body ng-controller="appController">
 
+<div ng-show="screen === 'HOME'" style="width: 70%; margin: auto">
+
+    <h3>Create order list</h3>
+    <br>
+    <div class="well" ng-show="groupCreated">
+        <h5>Share menu link</h5><br>
+        Menu link: <a target="_blank" href = "{{group.config.link}}MENU">MENU</a><br>
+        Dashboard link: <a target="_blank" href = "{{group.config.link}}DASHBOARD">DASHBOARD</a><br>
+    </div>
+    <form>
+        <div class="form-group">
+            <label>List name</label>
+            <input class="form-control" ng-model="group.config.name">
+        </div>
+        <div class="form-group">
+            <label>Menu</label>
+            <select class="form-control" ng-model="group.config.menu">
+                <option value="sodo">Số đỏ</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" ng-click="onCreateList()">Create</button>
+    </form>
+
+
+</div>
+
+<div ng-show="screen === 'MENU'">
+    MENU
+</div>
+
+<div ng-show="screen === 'DASHBOARD'">
+    DASHBOARD
+</div>
+
+
 <button class="btn btn-info" ng-click="toggleMenu()">{{menuVisible?'CLOSE MENU':'OPEN MENU'}}</button>
 <button class="btn btn-info" ng-click="toggleOrderList()">{{orderListVisible?'CLOSE ORDER-LIST':'OPEN ORDER-LIST'}}
 </button>
@@ -230,8 +265,11 @@
 <script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="assets/plugins/angular/angular-xeditable-0.8.0/xeditable.min.css">
-<script type="text/javascript" src="assets/plugins/angular/angular-xeditable-0.8.0/xeditable.min.js"></script>
+<link rel="stylesheet" href="assets/plugins/angular/xeditable/xeditable.min.css">
+<script type="text/javascript" src="assets/plugins/angular/xeditable/xeditable.min.js"></script>
+
+<link rel="stylesheet" href="assets/plugins/angular/toastr/angular-toastr.min.css">
+<script type="text/javascript" src="assets/plugins/angular/toastr/angular-toastr.tpls.js"></script>
 
 <link rel="stylesheet" href="assets/plugins/ui-select/ui-select.min.css" media="screen">
 <script type="text/javascript" src="assets/plugins/ui-select/ui-select.min.js"></script>
@@ -240,7 +278,7 @@
 <script type="text/javascript" src="assets/plugins/html2canvas.min.js"></script>
 
 <!-- custom js -->
-<script type="text/javascript" src="assets/js/order/order-on.js"></script>
+<script type="text/javascript" src="assets/js/order/order.js"></script>
 <script type="text/javascript" src="assets/js/order/models.js"></script>
 <script type="text/javascript" src="assets/js/order/services.js"></script>
 <script type="text/javascript" src="assets/js/order/filters.js"></script>

@@ -4,18 +4,19 @@ angular.module('app.services', [])
         //https://firebase.google.com/docs/database/web/read-and-write
         var database = firebase.database();
 
-        this.write = function (key, data) {
-            database.ref(key).set(data);
+        this.write = function (key, data, onData) {
+            database.ref(key).set(data).then(function(){
+                if(onData) onData();
+            });
         };
         this.listen = function (key, onData) {
-            database.ref(key)
-                .on('value', function (snapshot) {
-                    onData(snapshot.val())
-                });
+            database.ref(key).on('value', function (snapshot) {
+                if (onData) onData(snapshot.val())
+            });
         };
         this.readOne = function (key, onData) {
             return database.ref(key).once('value').then(function (snapshot) {
-                onData(snapshot.val());
+                if (onData) onData(snapshot.val());
             });
         };
         this.remove = function (key) {
@@ -44,9 +45,25 @@ angular.module('app.services', [])
             str = str.replace(/đ/g, "d");
             return str;
         };
-
         this.compareVi = function (base, search) {
             return this.convertViToEn(base).indexOf(this.convertViToEn(search)) !== -1;
+        };
+
+        /*************************************************
+         * // query string: ?foo=lorem&bar=&baz
+         var foo = getParameterByName('foo'); // "lorem"
+         var bar = getParameterByName('bar'); // "" (present with empty value)
+         var baz = getParameterByName('baz'); // "" (present with no value)
+         var qux = getParameterByName('qux'); // null (absent)
+         */
+        this.getParameterByName = function (name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
     })
 
