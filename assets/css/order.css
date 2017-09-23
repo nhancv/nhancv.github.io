@@ -42,14 +42,14 @@ p {
 }
 
 .menu-table {
-    background-color: chocolate;
+    background-color: slategray;
 }
 
-.menu-table th {
+.menu-table thead {
     padding: 20px 15px;
     text-align: left;
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 15px;
     color: #fff;
     text-transform: uppercase;
 }
@@ -59,7 +59,7 @@ p {
     text-align: left;
     vertical-align: middle;
     font-weight: 300;
-    font-size: 12px;
+    font-size: 13px;
     color: #fff;
     border-bottom: solid 1px rgba(255, 255, 255, 0.1);
 }
