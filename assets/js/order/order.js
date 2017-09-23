@@ -55,11 +55,14 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
         $scope.menuLocalOrders = $localStorage.menuLocalOrders;
         $scope.menuTotalPrice = 0;
         $scope.screen = screen;
+        $scope.groupConfig = {};
+
         sFirebase.readOne(key, function (group) {
             if (group === null) {
                 window.location.href = "./";
                 return;
             }
+            $scope.groupConfig = group.config;
 
             //@nhancv TODO: Prepare menu
             $scope.menuContact = menu[group.config.menu].contact;
@@ -144,11 +147,13 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
 
         $scope.orderItems = $localStorage.orderItems;
         $scope.screen = screen;
+        $scope.groupConfig = {};
         sFirebase.readOne(key, function (group) {
             if (group === null) {
                 window.location.href = "./";
                 return;
             }
+            $scope.groupConfig = group.config;
 
             //@nhancv TODO: Prepare menu
             $scope.menuContact = menu[group.config.menu].contact;

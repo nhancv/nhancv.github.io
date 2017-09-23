@@ -62,13 +62,22 @@
                 <option value="sodo">Số đỏ</option>
             </select>
         </div>
-        <button ng-show="!groupCreated && group.config.name !== null" class="btn btn-primary" ng-click="onCreateList()">Create</button>
+        <button ng-show="!groupCreated && group.config.name !== null" class="btn btn-primary" ng-click="onCreateList()">
+            Create
+        </button>
     </form>
 
 
 </div>
 
-<div ng-show="screen === 'MENU'">
+<div ng-show="screen === 'MENU' && groupConfig.name">
+    <div>
+        <h2>{{groupConfig.name}}</h2>
+        <h4>{{groupConfig.date}}</h4>
+        <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}MENU">MENU</a>
+        <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}DASHBOARD">DASHBOARD</a>
+    </div>
+    <hr>
     <div class="well">
         MENU: {{menuContact.title}}<br>
         Link: {{menuContact.link}}<br>
@@ -156,7 +165,14 @@
     </div>
 </div>
 
-<div ng-show="screen === 'DASHBOARD'">
+<div ng-show="screen === 'DASHBOARD' && groupConfig.name">
+    <div>
+        <h2>{{groupConfig.name}}</h2>
+        <h4>{{groupConfig.date}}</h4>
+        <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}MENU">MENU</a>
+        <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}DASHBOARD">DASHBOARD</a>
+    </div>
+    <hr>
     <h3>ORDER LIST</h3>
     <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()" onbefore>
         <!-- table -->
