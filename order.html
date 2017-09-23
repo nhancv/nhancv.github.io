@@ -38,6 +38,52 @@
         ga('send', 'pageview');
 
     </script>
+
+
+
+    <!-- Javascript -->
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            "rules": {
+                ".read": true,
+                ".write": true
+            },
+            apiKey: "AIzaSyCqX7JdbnjkmxDxq6Yps0dkfkd_Wm9zE60",
+            authDomain: "drink-order.firebaseapp.com",
+            databaseURL: "https://drink-order.firebaseio.com",
+            projectId: "drink-order",
+            storageBucket: "",
+            messagingSenderId: "695508235343"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script type="text/javascript" src="assets/plugins/angular/angular.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/angular/ngStorage.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/md5.min.js"></script>
+
+    <link rel="stylesheet" href="assets/plugins/angular/xeditable/xeditable.min.css">
+    <script type="text/javascript" src="assets/plugins/angular/xeditable/xeditable.min.js"></script>
+
+    <link rel="stylesheet" href="assets/plugins/angular/toastr/angular-toastr.min.css">
+    <script type="text/javascript" src="assets/plugins/angular/toastr/angular-toastr.tpls.js"></script>
+
+    <link rel="stylesheet" href="assets/plugins/ui-select/ui-select.min.css" media="screen">
+    <script type="text/javascript" src="assets/plugins/ui-select/ui-select.min.js"></script>
+
+    <script type="text/javascript" src="assets/plugins/pdfmake.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/html2canvas.min.js"></script>
+
+    <!-- custom js -->
+    <script type="text/javascript" src="assets/js/order/order.js"></script>
+    <script type="text/javascript" src="assets/js/order/models.js"></script>
+    <script type="text/javascript" src="assets/js/order/services.js"></script>
+    <script type="text/javascript" src="assets/js/order/filters.js"></script>
+
 </head>
 
 <body ng-controller="appController">
@@ -304,48 +350,6 @@
     </div>
 </footer>
 
-<!-- Javascript -->
-<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-<script>
-    // Initialize Firebase
-    var config = {
-        "rules": {
-            ".read": true,
-            ".write": true
-        },
-        apiKey: "AIzaSyCqX7JdbnjkmxDxq6Yps0dkfkd_Wm9zE60",
-        authDomain: "drink-order.firebaseapp.com",
-        databaseURL: "https://drink-order.firebaseio.com",
-        projectId: "drink-order",
-        storageBucket: "",
-        messagingSenderId: "695508235343"
-    };
-    firebase.initializeApp(config);
-</script>
-
-<script type="text/javascript" src="assets/plugins/angular/angular.min.js"></script>
-<script type="text/javascript" src="assets/plugins/angular/ngStorage.min.js"></script>
-<script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="assets/plugins/md5.min.js"></script>
-
-<link rel="stylesheet" href="assets/plugins/angular/xeditable/xeditable.min.css">
-<script type="text/javascript" src="assets/plugins/angular/xeditable/xeditable.min.js"></script>
-
-<link rel="stylesheet" href="assets/plugins/angular/toastr/angular-toastr.min.css">
-<script type="text/javascript" src="assets/plugins/angular/toastr/angular-toastr.tpls.js"></script>
-
-<link rel="stylesheet" href="assets/plugins/ui-select/ui-select.min.css" media="screen">
-<script type="text/javascript" src="assets/plugins/ui-select/ui-select.min.js"></script>
-
-<script type="text/javascript" src="assets/plugins/pdfmake.min.js"></script>
-<script type="text/javascript" src="assets/plugins/html2canvas.min.js"></script>
-
-<!-- custom js -->
-<script type="text/javascript" src="assets/js/order/order.js"></script>
-<script type="text/javascript" src="assets/js/order/models.js"></script>
-<script type="text/javascript" src="assets/js/order/services.js"></script>
-<script type="text/javascript" src="assets/js/order/filters.js"></script>
 </body>
 </html> 
 
