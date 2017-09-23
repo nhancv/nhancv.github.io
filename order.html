@@ -62,7 +62,7 @@
                 <option value="sodo">Số đỏ</option>
             </select>
         </div>
-        <button class="btn btn-primary" ng-click="onCreateList()">Create</button>
+        <button ng-show="!groupCreated && group.config.name !== null" class="btn btn-primary" ng-click="onCreateList()">Create</button>
     </form>
 
 
