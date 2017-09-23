@@ -8,6 +8,19 @@ angular.module('app.filters', [])
             return p;
         }
     })
+    .filter('fTime', function () {
+        return function (p) {
+            if(p !== undefined && p !== null){
+                var date = new Date(p);
+                var hours = date.getHours();
+                var minutes = "0" + date.getMinutes();
+                var seconds = "0" + date.getSeconds();
+                // Will display time in 10:30:23 format
+                return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
+            }
+            return p;
+        }
+    })
     .filter('fDrinkSearch', function (sUtil) {
         return function (arr, search) {
             var filtered = [];

@@ -100,7 +100,8 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                     name: $scope.menuOrderInfo.name,
                     orderQuantity: $scope.menuOrderInfo.quantity,
                     drinkName: menuItem.name,
-                    drinkPrice: menuItem.price
+                    drinkPrice: menuItem.price,
+                    time: Date.now()
                 };
 
                 sFirebase.write(key + '/data/' + orderItem.id, orderItem, function () {
@@ -205,6 +206,7 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                     drinkName: null,
                     drinkPrice: null,
                     orderQuantity: 1,
+                    time: Date.now(),
                     isNew: true
                 });
             };
@@ -282,7 +284,7 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                         var docDefinition = {
                             content: [{
                                 image: data,
-                                width: 500,
+                                width: 500
                             }]
                         };
                         pdfMake.createPdf(docDefinition).download("order.pdf");
@@ -341,7 +343,8 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                     drinkName: t.drinkName,
                     drinkPrice: t.drinkPrice,
                     orderQuantity: t.orderQuantity,
-                    orderName: orderNames
+                    orderName: orderNames,
+                    time: t.time
                 };
             }
         });
@@ -365,7 +368,12 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
 
     function dashboardOrderUpdates(_data) {
         if (key === $localStorage.groupKey && _data) {
-            $localStorage.orderItems = Object.values(_data);
+            var data = Object.values(_data);
+            data.sort(function (a, b) {
+                return a.time - b.time;
+            });
+
+            $localStorage.orderItems = data;
         } else {
             $localStorage.orderItems = [];
         }
@@ -379,6 +387,7 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
     function menuOrderUpdates(_data) {
         if (key === $localStorage.groupKey && _data) {
             var data = Object.values(_data);
+
             var tmp = [];
             var needUpdate = false;
             for (var i = 0; i < $localStorage.menuLocalOrders.length; i++) {
