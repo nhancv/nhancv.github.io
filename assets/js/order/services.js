@@ -1,5 +1,36 @@
 angular.module('app.services', [])
 
+    .service('sFirebase', function () {
+        //https://firebase.google.com/docs/database/web/read-and-write
+        var database = firebase.database();
+
+        this.write = function (key, data) {
+            database.ref(key).set(data);
+        };
+        this.listen = function (key, onData) {
+            database.ref(key)
+                .on('value', function (snapshot) {
+                    onData(snapshot.val())
+                });
+        };
+        this.readOne = function (key, onData) {
+            return database.ref(key).once('value').then(function (snapshot) {
+                onData(snapshot.val());
+            });
+        };
+        this.remove = function (key) {
+            database.ref(key).remove();
+        };
+        this.offListen = function (key) {
+            database.ref(key).off();
+        };
+        this.update = function (updateObject) {
+            database.ref().update(updateObject)
+        };
+        this.genKey = function (parentKey) {
+            return database.ref().child(parentKey).push().key;
+        }
+    })
     .service('sUtil', function () {
         this.convertViToEn = function (alias) {
             var str = alias;
