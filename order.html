@@ -48,8 +48,8 @@
     <br>
     <div class="well" ng-show="groupCreated">
         <h5>Share menu link</h5><br>
-        Menu link: <a target="_blank" href = "{{group.config.link}}MENU">MENU</a><br>
-        Dashboard link: <a target="_blank" href = "{{group.config.link}}DASHBOARD">DASHBOARD</a><br>
+        Menu link: <a target="_blank" href="{{group.config.link}}MENU">MENU</a><br>
+        Dashboard link: <a target="_blank" href="{{group.config.link}}DASHBOARD">DASHBOARD</a><br>
     </div>
     <form>
         <div class="form-group">
@@ -69,59 +69,101 @@
 </div>
 
 <div ng-show="screen === 'MENU'">
-    MENU
-</div>
-
-<div ng-show="screen === 'DASHBOARD'">
-    DASHBOARD
-</div>
-
-
-<button class="btn btn-info" ng-click="toggleMenu()">{{menuVisible?'CLOSE MENU':'OPEN MENU'}}</button>
-<button class="btn btn-info" ng-click="toggleOrderList()">{{orderListVisible?'CLOSE ORDER-LIST':'OPEN ORDER-LIST'}}
-</button>
-<div ng-show="menuVisible">
-    <br>
     <div class="well">
-        Menu: {{menuContact.title}}<br>
+        MENU: {{menuContact.title}}<br>
         Link: {{menuContact.link}}<br>
         Address: {{menuContact.address}}<br>
         Open time: {{menuContact.openTime}}<br>
         Phone: {{menuContact.phone}}<br>
     </div>
-
-    <div class="menu-table">
+    <div class="menu-table" ng-show="menuLocalOrders.length>0">
         <div class="tbl-header">
             <table cellpadding="0" cellspacing="0" border="0">
                 <thead>
                 <tr>
-                    <td>STT</td>
+                    <td style="width: 50px">STT</td>
                     <td>Name</td>
-                    <td>Price</td>
+                    <td>Quantity</td>
+                    <td>Drink name</td>
+                    <td>Drink price: {{menuTotalPrice | fPrice}}</td>
                 </tr>
                 </thead>
             </table>
         </div>
         <div class="tbl-content">
             <table cellpadding="0" cellspacing="0" border="0">
-                <tr ng-repeat="item in drinkItems">
-                    <td>{{$index + 1}}</td>
+                <tr ng-repeat="item in menuLocalOrders track by $index">
+                    <td style="width: 50px">{{$index + 1}}</td>
                     <td>{{item.name}}</td>
-                    <td>{{item.price}}</td>
+                    <td>{{item.orderQuantity}}</td>
+                    <td>{{item.drinkName}}</td>
+                    <td>{{item.drinkPrice | fPrice}}</td>
                 </tr>
             </table>
         </div>
     </div>
+
     <br>
+    <br>
+
+    <div class="menu-table">
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                <tr>
+                    <td style="width: 50px">STT</td>
+                    <td>Name</td>
+                    <td>Price</td>
+                    <td style="width: 50%">Act</td>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr ng-repeat="item in drinkItems track by $index">
+                    <td style="width: 50px">{{$index + 1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.price | fPrice}}</td>
+                    <td style="width: 50%">
+
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <button type="button"
+                                        ng-click="menuShowOrderForm != $index + 1 ? menuShowOrderForm = $index + 1 : menuShowOrderForm = 0 "
+                                        class="btn btn-primary">Order
+                                </button>
+                            </div>
+                            <div class="form-group" ng-show="menuShowOrderForm == $index + 1">
+                                <input class="form-control" ng-model="menuOrderInfo.name" placeholder="Order name">
+                            </div>
+                            <div class="form-group" ng-show="menuShowOrderForm == $index + 1">
+                                <input style="width: 80px;" type="number"
+                                       class="form-control" ng-model="menuOrderInfo.quantity" placeholder="Quantity">
+                            </div>
+                            <div class="form-group"
+                                 ng-show="menuShowOrderForm == $index + 1 && menuOrderInfo.name"
+                            >
+                                <button class="btn btn-warning" ng-click="onMenuOrderItem(item); menuShowOrderForm = 0">
+                                    Add
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 
-<div ng-show="orderListVisible">
+<div ng-show="screen === 'DASHBOARD'">
     <h3>ORDER LIST</h3>
     <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()" onbefore>
         <!-- table -->
         <table class="table table-hover table-bordered table-condensed table-striped">
             <thead>
             <tr style="font-weight: bold">
+                <td style="width:50px">STT</td>
                 <td style="width:40%">Name</td>
                 <td style="width:30%">Drink</td>
                 <td style="width:30%">Price</td>
@@ -130,10 +172,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="order in orderItems | filter:filterOrder">
+            <tr ng-repeat="order in orderItems | filter:filterOrder track by $index">
+                <td>{{$index+1}}</td>
                 <td>
                     <span editable-text="order.name" e-style="width:100%;" e-form="tableform"
-                          onbeforesave="validateEmpty($data, order.id)">
+                          onbeforesave="validateEmpty($data)">
                         {{ order.name || 'empty' }}
                     </span>
                 </td>
@@ -206,7 +249,7 @@
 
         <h3>SUMMARY</h3>
         <br>
-        <table ng-show="menuVisible" class="table table-bordered table-hover table-condensed table-striped">
+        <table class="table table-bordered table-hover table-condensed table-striped">
             <thead>
             <tr style="font-weight: bold">
                 <td>STT</td>
@@ -217,7 +260,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="(key, order) in summaryList">
+            <tr ng-repeat="(key, order) in summaryList track by $index">
                 <td>{{$index + 1}}</td>
                 <td>{{order.drinkName}}</td>
                 <td>{{order.drinkPrice}}</td>
@@ -264,6 +307,7 @@
 <script type="text/javascript" src="assets/plugins/angular/ngStorage.min.js"></script>
 <script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/plugins/md5.min.js"></script>
 
 <link rel="stylesheet" href="assets/plugins/angular/xeditable/xeditable.min.css">
 <script type="text/javascript" src="assets/plugins/angular/xeditable/xeditable.min.js"></script>

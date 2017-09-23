@@ -64,6 +64,9 @@ angular.module('app.services', [])
             if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
+        };
+        this.getUid = function () {
+            return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
         }
     })
 

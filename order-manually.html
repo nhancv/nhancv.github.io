@@ -496,7 +496,7 @@
         function getTotalPrice() {
             $scope.totalPrice = 0;
             for (var key in $scope.summaryList) {
-                $scope.totalPrice += $scope.summaryList[key].drinkPrice;
+                $scope.totalPrice += $scope.summaryList[key].drinkPrice * $scope.summaryList[key].orderQuantity;
             }
         }
 
