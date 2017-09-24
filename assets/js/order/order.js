@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('app', ['ngStorage', 'xeditable', 'ui.select', 'app.models', 'app.services', 'app.filters', 'toastr']);
+var app = angular.module('app', ['ngStorage', 'xeditable', 'ui.select', 'app.models', 'app.services', 'app.filters', 'app.directives', 'toastr']);
 app.config(function (uiSelectConfig) {
     uiSelectConfig.theme = 'bootstrap';
     uiSelectConfig.resetSearchInput = true;
@@ -8,6 +8,28 @@ app.config(function (uiSelectConfig) {
 app.run(function (editableOptions) {
     editableOptions.theme = 'bs3';
 });
+angular.module('app.directives', [])
+    .directive('fbSend', function () {
+        function createHTML(href) {
+            return '<div class="fb-send" ' +
+                'data-href="' + href + '"> ' +
+                '</div>';
+        }
+
+        return {
+            restrict: 'EA',
+            scope: {},
+            link: function postLink(scope, elem, attrs) {
+                attrs.$observe('pageHref', function (newValue) {
+                    elem.html(createHTML(newValue));
+                    try {
+                        FB.XFBML.parse(elem[0]);
+                    } catch (e) {
+                    }
+                });
+            }
+        };
+    });
 app.controller('appController', function ($scope, $localStorage, $sessionStorage, $filter, toastr, sFirebase, sUtil, menu) {
 
     $scope.isLoading = false;
@@ -411,6 +433,7 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
         });
     } else {
         $scope.groupCreated = false;
+        $scope.groupSendLink = null;
         $scope.group = {
             config: {
                 key: null,
@@ -431,6 +454,9 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                 $scope.group.config.key = groupKey;
                 $scope.group.config.date = new Date().toUTCString();
                 $scope.group.config.link = '/order?k=' + groupKey + '&s=';
+
+                $scope.groupSendLink = window.location.protocol + '//' + window.location.host + $scope.group.config.link + 'MENU';
+
                 sFirebase.write(groupKey, $scope.group, function () {
                     toastr.success('Successfully', 'Create list');
                     $scope.groupCreated = true;

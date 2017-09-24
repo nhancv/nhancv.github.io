@@ -8,7 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Order drinks">
     <meta name="author" content="Nhan Cao">
+    <meta name="image" content="image.png"/>
+
     <link rel="shortcut icon" href="favicon.ico">
+
     <!-- Global CSS -->
     <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
     <!-- Plugins CSS -->
@@ -58,12 +61,19 @@
         };
         firebase.initializeApp(config);
     </script>
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=736524826509698";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
     <script type="text/javascript" src="assets/plugins/angular/angular.min.js"></script>
     <script type="text/javascript" src="assets/plugins/angular/ngStorage.min.js"></script>
     <script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/plugins/md5.min.js"></script>
 
     <link rel="stylesheet" href="assets/plugins/angular/xeditable/xeditable.min.css">
     <script type="text/javascript" src="assets/plugins/angular/xeditable/xeditable.min.js"></script>
@@ -100,6 +110,7 @@
             <h5>Share menu link</h5>
             <a class="btn btn-info" target="_blank" href="{{group.config.link}}MENU">MENU</a>
             <a class="btn btn-info" target="_blank" href="{{group.config.link}}DASHBOARD">DASHBOARD</a><br>
+            <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
         </div>
         <form>
             <div class="form-group">
@@ -226,7 +237,8 @@
         </div>
         <hr>
         <h3>ORDER LIST</h3>
-        <form editable-form name="tableform" onaftersave="onDashboardSaveTable()" oncancel="onDashboardCancelChange()" onbefore>
+        <form editable-form name="tableform" onaftersave="onDashboardSaveTable()" oncancel="onDashboardCancelChange()"
+              onbefore>
             <!-- table -->
             <div class="table-responsive">
                 <table class="table table-hover table-bordered table-condensed table-striped">
@@ -301,7 +313,8 @@
                 </button>
             </div>
             <div class="btn-form" ng-show="tableform.$visible">
-                <button type="button" ng-disabled="tableform.$waiting" ng-click="onDashboardAddOrder()" class="btn btn-success">
+                <button type="button" ng-disabled="tableform.$waiting" ng-click="onDashboardAddOrder()"
+                        class="btn btn-success">
                     add row
                 </button>
                 <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
