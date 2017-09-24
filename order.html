@@ -107,10 +107,10 @@
         <h3>Create order list</h3>
         <br>
         <div class="well" ng-show="groupCreated">
-            <h5>Share menu link </h5><fb-send page-href="{{groupSendLink}}">SEND</fb-send>
+            <h5>Share menu link </h5>
             <a class="btn btn-info" target="_blank" href="{{group.config.link}}MENU">MENU</a>
             <a class="btn btn-info" target="_blank" href="{{group.config.link}}DASHBOARD">DASHBOARD</a><br>
-
+            <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
         </div>
         <form>
             <div class="form-group">
@@ -231,10 +231,11 @@
     <div ng-show="screen === 'DASHBOARD' && groupConfig.name">
         <div>
             <h2>{{groupConfig.name}}</h2>
-            <h4>{{groupConfig.date}}</h4><fb-send page-href="{{groupSendLink}}">SEND</fb-send>
+            <h4>{{groupConfig.date}}</h4>
             <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}MENU">MENU</a>
             <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}DASHBOARD">DASHBOARD</a>
             <button class="btn btn-info" ng-click="onDashboardDestroyOrder()">CANCEL</button>
+            <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
         </div>
         <hr>
         <h3>ORDER LIST</h3>
