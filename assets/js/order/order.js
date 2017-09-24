@@ -10,35 +10,9 @@ app.run(function (editableOptions) {
 });
 app.controller('appController', function ($scope, $localStorage, $sessionStorage, $filter, toastr, sFirebase, sUtil, menu) {
 
+    $scope.isLoading = false;
+
     $scope.screen = 'HOME'; //HOME, MENU, DASHBOARD
-    $scope.groupCreated = false; //HOME, MENU, DASHBOARD
-    $scope.group = {
-        config: {
-            key: null,
-            name: null,
-            date: null,
-            menu: 'sodo',
-            link: null
-        },
-        data: {}
-    };
-
-    $scope.onCreateList = function () {
-        if ($scope.group.config.name === null) {
-            toastr.error('Name must be not empty', 'Error');
-        } else {
-            var groupKey = sFirebase.genKey('/');
-            $scope.group.config.key = groupKey;
-            $scope.group.config.date = new Date().toUTCString();
-            $scope.group.config.link = '/order?k=' + groupKey + '&s=';
-            sFirebase.write(groupKey, $scope.group, function () {
-                toastr.success('Successfully', 'Create list');
-                $scope.groupCreated = true;
-            });
-        }
-
-    };
-
     var key = sUtil.getParameterByName('k');
     var screen = sUtil.getParameterByName('s');
 
@@ -56,8 +30,9 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
         $scope.menuTotalPrice = 0;
         $scope.screen = screen;
         $scope.groupConfig = {};
-
+        showLoading(true);
         sFirebase.readOne(key, function (group) {
+            showLoading(false);
             if (group === null) {
                 window.location.href = "./";
                 return;
@@ -107,11 +82,13 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                     time: Date.now()
                 };
 
+                showLoading(true);
                 sFirebase.write(key + '/data/' + orderItem.id, orderItem, function () {
                     toastr.success('Successfully', 'Order');
                     $scope.menuLocalOrders.push(orderItem);
                     $localStorage.menuLocalOrders = $scope.menuLocalOrders;
                     menuTotalPriceUpdate();
+                    showLoading(false);
                 });
 
             };
@@ -148,7 +125,9 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
         $scope.orderItems = $localStorage.orderItems;
         $scope.screen = screen;
         $scope.groupConfig = {};
+        showLoading(true);
         sFirebase.readOne(key, function (group) {
+            showLoading(false);
             if (group === null) {
                 window.location.href = "./";
                 return;
@@ -256,11 +235,12 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                     dataWrite[item.id] = item;
                 }
 
+                showLoading(true);
                 sFirebase.write(key + '/data', dataWrite, function () {
                     toastr.success('Successfully', 'Order');
                     dashboardSummaryUpdate();
                     $localStorage.orderItems = $scope.orderItems;
-
+                    showLoading(false);
                 });
 
             };
@@ -315,6 +295,40 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
             } catch (e) {
             }
         });
+    } else {
+        $scope.groupCreated = false;
+        $scope.group = {
+            config: {
+                key: null,
+                name: null,
+                date: null,
+                menu: 'sodo',
+                link: null
+            },
+            data: {}
+        };
+
+        $scope.onCreateList = function () {
+            if ($scope.group.config.name === null) {
+                toastr.error('Name must be not empty', 'Error');
+            } else {
+                showLoading(true);
+                var groupKey = sFirebase.genKey('/');
+                $scope.group.config.key = groupKey;
+                $scope.group.config.date = new Date().toUTCString();
+                $scope.group.config.link = '/order?k=' + groupKey + '&s=';
+                sFirebase.write(groupKey, $scope.group, function () {
+                    toastr.success('Successfully', 'Create list');
+                    $scope.groupCreated = true;
+                    showLoading(false);
+                });
+            }
+
+        };
+    }
+
+    function showLoading(enable) {
+        $scope.isLoading = enable;
     }
 
     function dashboardSummaryUpdate() {

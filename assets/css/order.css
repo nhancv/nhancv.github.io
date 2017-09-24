@@ -37,7 +37,7 @@ p {
 .tbl-content {
     height: 100%;
     overflow-x: auto;
-    margin-top: 0px;
+    margin-top: 0;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 

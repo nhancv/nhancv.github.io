@@ -3,7 +3,7 @@ angular.module('app.filters', [])
     .filter('fPrice', function () {
         return function (p) {
             if(p !== undefined && p !== null){
-                return p + "k (VND)"
+                return p + "k"
             }
             return p;
         }
