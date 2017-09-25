@@ -160,6 +160,7 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                 } else {
                     group = _group;
 
+                    $scope.groupConfig = group.config;
                     var data = group.data;
                     if (data !== null) {
                         group.data = data;

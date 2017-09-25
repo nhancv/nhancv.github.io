@@ -185,7 +185,7 @@
                         <td style="width: 50px">STT</td>
                         <td>Name</td>
                         <td>Price</td>
-                        <td style="width: 50%">Action</td>
+                        <td style="width: 50%" ng-show="!groupConfig.finish">Action</td>
                     </tr>
                     </thead>
                 </table>
@@ -196,8 +196,7 @@
                         <td style="width: 50px">{{$index + 1}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.price | fPrice}}</td>
-                        <td style="width: 50%">
-
+                        <td style="width: 50%" ng-show="!groupConfig.finish">
                             <form class="form-inline">
                                 <div class="form-group">
                                     <button type="button"
