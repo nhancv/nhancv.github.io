@@ -138,45 +138,52 @@
             <h2>{{groupConfig.name}}</h2>
             <h4>{{groupConfig.date}}</h4>
             <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
+            <div class="alert alert-warning">
+                <strong>Instruction:</strong> Select your favorite item by "Order", fill your name and click "Book". DONE!!!
+            </div>
         </div>
-        <hr>
-        <div class="well">
-            MENU: {{menuContact.title}}<br>
-            Link: {{menuContact.link}}<br>
+        <div class="alert alert-info">
+            <h3>{{menuContact.title}}</h3>
+            Link: <a href="{{menuContact.link}}" target="_blank">{{menuContact.link}}</a><br>
             Address: {{menuContact.address}}<br>
             Open time: {{menuContact.openTime}}<br>
             Phone: {{menuContact.phone}}<br>
         </div>
-        <div class="menu-table" ng-show="menuLocalOrders.length>0">
-            <div class="tbl-header">
-                <table cellpadding="0" cellspacing="0" border="0">
-                    <thead>
-                    <tr>
-                        <td style="width: 50px">STT</td>
-                        <td>Name</td>
-                        <td>Quantity</td>
-                        <td>Drink name</td>
-                        <td>Drink price: {{menuTotalPrice | fPrice}}</td>
-                    </tr>
-                    </thead>
-                </table>
+
+        <div ng-show="menuLocalOrders.length>0">
+            <h3>Your orders</h3>
+            <div class="menu-table">
+                <div class="tbl-header">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                        <tr>
+                            <td style="width: 50px">STT</td>
+                            <td>Name</td>
+                            <td>Quantity</td>
+                            <td>Drink name</td>
+                            <td>Drink price: {{menuTotalPrice | fPrice}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tbl-content">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tr ng-repeat="item in menuLocalOrders track by $index">
+                            <td style="width: 50px">{{$index + 1}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.orderQuantity}}</td>
+                            <td>{{item.drinkName}}</td>
+                            <td>{{item.drinkPrice | fPrice}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class="tbl-content">
-                <table cellpadding="0" cellspacing="0" border="0">
-                    <tr ng-repeat="item in menuLocalOrders track by $index">
-                        <td style="width: 50px">{{$index + 1}}</td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.orderQuantity}}</td>
-                        <td>{{item.drinkName}}</td>
-                        <td>{{item.drinkPrice | fPrice}}</td>
-                    </tr>
-                </table>
-            </div>
+
+            <br>
         </div>
-
-        <br>
         <br>
 
+        <h3>Menu</h3>
         <div class="menu-table">
             <div class="tbl-header">
                 <table cellpadding="0" cellspacing="0" border="0">
@@ -217,7 +224,7 @@
                                 >
                                     <button class="btn btn-warning"
                                             ng-click="onMenuOrderItem(item); menuShowOrderForm = 0">
-                                        Add
+                                        Book
                                     </button>
                                 </div>
                             </form>
@@ -233,8 +240,12 @@
             <h2>{{groupConfig.name}}</h2>
             <h4>{{groupConfig.date}}</h4>
             <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}MENU">MENU</a>
-            <button ng-show="!groupConfig.finish" class="btn btn-warning" ng-click="onDashboardFinishOrder(true)">FINISH</button>
-            <button ng-show="groupConfig.finish" class="btn btn-warning" ng-click="onDashboardFinishOrder(false)">RE-EDIT</button>
+            <button ng-show="!groupConfig.finish" class="btn btn-warning" ng-click="onDashboardFinishOrder(true)">
+                FINISH
+            </button>
+            <button ng-show="groupConfig.finish" class="btn btn-warning" ng-click="onDashboardFinishOrder(false)">
+                RE-EDIT
+            </button>
             <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
         </div>
         <hr>
