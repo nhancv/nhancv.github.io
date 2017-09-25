@@ -493,7 +493,7 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                 showLoading(true);
                 var groupKey = sFirebase.genKey('/');
                 $scope.group.config.key = groupKey;
-                $scope.group.config.date = new Date().toUTCString();
+                $scope.group.config.date = new Date().toString();
                 $scope.group.config.link = '/order?k=' + groupKey + '&s=';
 
                 $scope.groupSendLink = window.location.protocol + '//' + window.location.host + $scope.group.config.link + 'MENU';
