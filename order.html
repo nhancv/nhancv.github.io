@@ -234,7 +234,7 @@
             <h2>{{groupConfig.name}}</h2>
             <h4>{{groupConfig.date}}</h4>
             <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}MENU">MENU</a>
-            <button class="btn btn-info" ng-click="onDashboardDestroyOrder()">FINISH</button>
+            <button ng-show="!groupConfig.finish" class="btn btn-info" ng-click="onDashboardFinishOrder()">FINISH</button>
             <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
         </div>
         <hr>
@@ -309,7 +309,7 @@
             </div>
             <!-- buttons -->
             <div class="btn-edit">
-                <button type="button" class="btn btn-primary" ng-show="!tableform.$visible"
+                <button type="button" class="btn btn-primary" ng-show="!tableform.$visible && !groupConfig.finish"
                         ng-click="onDashboardEditOrder(tableform)">
                     Edit
                 </button>
@@ -366,6 +366,7 @@
             <h5>Total price: {{totalPrice | fPrice}}</h5>
         </div>
         <button class="btn btn-info" ng-click="dashBoardExport()">Export</button>
+        <button class="btn btn-info" ng-click="onDashboardDestroyOrder()">Destroy</button>
         <br>
     </div>
 

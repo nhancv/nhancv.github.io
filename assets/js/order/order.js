@@ -158,7 +158,9 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                         window.location.href = "./";
                     }, 350);
                 } else {
-                    var data = _group.data;
+                    group = _group;
+
+                    var data = group.data;
                     if (data !== null) {
                         group.data = data;
                         menuOrderUpdates(group.data);
@@ -417,11 +419,18 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                 });
             };
 
+            $scope.onDashboardFinishOrder = function () {
+                sFirebase.write(key + '/config/finish', true, function () {
+                    toastr.info('Order finished');
+                    $scope.dashBoardExport();
+                });
+            };
+
             $scope.onDashboardDestroyOrder = function () {
                 $scope.dashBoardExport(function () {
                     sFirebase.offListen(key);
                     sFirebase.remove(key);
-                    toastr.info('Order completed and destroy');
+                    toastr.info('Order has been destroyed');
                     setTimeout(function () {
                         window.location.href = "./";
                     }, 350);
@@ -429,13 +438,24 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
             };
 
             //@nhancv TODO: Listen data changing
-            sFirebase.listen(key + '/data', function (data) {
-                if (data !== null) {
-                    group.data = data;
-                    dashboardOrderUpdates(group.data);
-                    try {
-                        $scope.$evalAsync();
-                    } catch (e) {
+            sFirebase.listen(key, function (_group) {
+                if (_group === null) {
+                    toastr.info('Order has been destroyed.');
+                    setTimeout(function () {
+                        window.location.href = "./";
+                    }, 350);
+                } else {
+                    group = _group;
+
+                    $scope.groupConfig = group.config;
+                    var data = group.data;
+                    if (data !== null) {
+                        group.data = data;
+                        dashboardOrderUpdates(group.data);
+                        try {
+                            $scope.$evalAsync();
+                        } catch (e) {
+                        }
                     }
                 }
             });
@@ -455,7 +475,8 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                 name: null,
                 date: null,
                 menu: 'sodo',
-                link: null
+                link: null,
+                finish: false
             },
             data: {}
         };
