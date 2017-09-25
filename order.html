@@ -252,7 +252,7 @@
                         <td style="width:30%">Price</td>
                         <td style="width:30%">Qty</td>
                         <td style="width:30%">Time</td>
-                        <td style="width:30%"><span>Action</span></td>
+                        <td style="width:30%" ng-show="!groupConfig.finish"><span>Action</span></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -297,7 +297,7 @@
                         <td>
                             {{order.time | fTime}}
                         </td>
-                        <td>
+                        <td ng-show="!groupConfig.finish">
                             <button ng-show="tableform.$visible" type="button" ng-show="tableform.$visible"
                                     ng-click="onDashboardRemoveOrder(order.id)"
                                     class="btn btn-danger pull-right">REMOVE
