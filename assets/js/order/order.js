@@ -414,8 +414,15 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                                 width: 500
                             }]
                         };
-                        pdfMake.createPdf(docDefinition).download("order" + key + ".pdf");
-                        if (onFinish) onFinish();
+
+                        try {
+                            if ($scope.orderItems.length > 0) {
+                                pdfMake.createPdf(docDefinition).download("order" + key + ".pdf");
+                            }
+                            if (onFinish) onFinish();
+                        } catch (e) {
+                            console.error(e);
+                        }
                     }
                 });
             };
