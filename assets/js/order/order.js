@@ -415,15 +415,19 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                             }]
                         };
                         pdfMake.createPdf(docDefinition).download("order" + key + ".pdf");
-                        if(onFinish) onFinish();
+                        if (onFinish) onFinish();
                     }
                 });
             };
 
-            $scope.onDashboardFinishOrder = function () {
-                sFirebase.write(key + '/config/finish', true, function () {
-                    toastr.info('Order finished');
-                    $scope.dashBoardExport();
+            $scope.onDashboardFinishOrder = function (finish) {
+                sFirebase.write(key + '/config/finish', finish, function () {
+                    if (finish) {
+                        toastr.info('Order finished');
+                        $scope.dashBoardExport();
+                    } else {
+                        toastr.info('Order in edit mode');
+                    }
                 });
             };
 

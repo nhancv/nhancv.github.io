@@ -233,7 +233,8 @@
             <h2>{{groupConfig.name}}</h2>
             <h4>{{groupConfig.date}}</h4>
             <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}MENU">MENU</a>
-            <button ng-show="!groupConfig.finish" class="btn btn-info" ng-click="onDashboardFinishOrder()">FINISH</button>
+            <button ng-show="!groupConfig.finish" class="btn btn-info" ng-click="onDashboardFinishOrder(true)">FINISH</button>
+            <button ng-show="groupConfig.finish" class="btn btn-info" ng-click="onDashboardFinishOrder(false)">RE-EDIT</button>
             <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
         </div>
         <hr>
