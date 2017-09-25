@@ -68,6 +68,10 @@ angular.module('app.models', [])
                         price: 25
                     },
                     {
+                        name: 'Trà sữa thái thập cẩm',
+                        price: 20
+                    },
+                    {
                         name: 'Trà vải',
                         price: 20
                     },
