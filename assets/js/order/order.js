@@ -105,7 +105,10 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
         sFirebase.readOne(key, function (group) {
             showLoading(false);
             if (group === null) {
-                window.location.href = "./";
+                toastr.info('Order is not exist.');
+                setTimeout(function () {
+                    window.location.href = "./";
+                }, 300);
                 return;
             }
             $scope.groupConfig = group.config;
@@ -150,7 +153,10 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
             //@nhancv TODO: Listen changing
             sFirebase.listen(key, function (_group) {
                 if (_group === null) {
-                    window.location.href = "./";
+                    toastr.info('Order has been destroyed.');
+                    setTimeout(function () {
+                        window.location.href = "./";
+                    }, 350);
                 } else {
                     var data = _group.data;
                     if (data !== null) {
@@ -273,7 +279,10 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
         sFirebase.readOne(key, function (group) {
             showLoading(false);
             if (group === null) {
-                window.location.href = "./";
+                toastr.info('Order is not exist.');
+                setTimeout(function () {
+                    window.location.href = "./";
+                }, 350);
                 return;
             }
             $scope.groupConfig = group.config;
@@ -392,7 +401,7 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
             $scope.totalPrice = 0;
 
             //@nhancv TODO: Export to pdf
-            $scope.dashBoardExport = function () {
+            $scope.dashBoardExport = function (onFinish) {
                 html2canvas(document.getElementById('export'), {
                     onrendered: function (canvas) {
                         var data = canvas.toDataURL();
@@ -402,15 +411,21 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
                                 width: 500
                             }]
                         };
-                        pdfMake.createPdf(docDefinition).download("order.pdf");
+                        pdfMake.createPdf(docDefinition).download("order" + key + ".pdf");
+                        if(onFinish) onFinish();
                     }
                 });
             };
 
             $scope.onDashboardDestroyOrder = function () {
-                sFirebase.offListen(key);
-                sFirebase.remove(key);
-                window.location.href = "./";
+                $scope.dashBoardExport(function () {
+                    sFirebase.offListen(key);
+                    sFirebase.remove(key);
+                    toastr.info('Order completed and destroy');
+                    setTimeout(function () {
+                        window.location.href = "./";
+                    }, 350);
+                });
             };
 
             //@nhancv TODO: Listen data changing
