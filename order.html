@@ -121,7 +121,7 @@
             <div class="form-group">
                 <label>Menu</label>
                 <select class="form-control" ng-model="group.config.menu">
-                    <option value="sodo">Số đỏ</option>
+                    <option ng-repeat="(key, value) in menuList track by $index" value="{{key}}">{{value.contact.title}}</option>
                 </select>
             </div>
             <button ng-show="!groupCreated && group.config.name !== null" class="btn btn-primary"

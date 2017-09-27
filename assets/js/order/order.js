@@ -481,6 +481,7 @@ app.controller('appController', function ($scope, $localStorage, $sessionStorage
     } else {
         $scope.groupCreated = false;
         $scope.groupSendLink = null;
+        $scope.menuList = menu;
         $scope.group = {
             config: {
                 key: null,
