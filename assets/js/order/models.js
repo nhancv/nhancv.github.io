@@ -68,10 +68,6 @@ angular.module('app.models', [])
                         price: 25
                     },
                     {
-                        name: 'Trà sữa thái thập cẩm',
-                        price: 20
-                    },
-                    {
                         name: 'Trà vải',
                         price: 20
                     },
@@ -86,6 +82,14 @@ angular.module('app.models', [])
                     {
                         name: 'Hồng trà thập cẩm',
                         price: 20
+                    },
+                    {
+                        name: 'Hồng trà thập cẩm bánh flan',
+                        price: 28
+                    },
+                    {
+                        name: 'Lục trà bánh flan',
+                        price: 18
                     }
                 ]
         },
