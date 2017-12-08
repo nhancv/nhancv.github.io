@@ -1,10 +1,10 @@
-### Home page: http://nhancv.github.io/
+### Home page: https://nhancv.github.io/
 
-### Order drink: http://nhancv.github.io/order
+### Order drink: https://nhancv.github.io/order
 
-### RxJava Brief: http://nhancv.github.io/rxjava
+### RxJava Brief: https://nhancv.github.io/rxjava
 
-### QRCode generator: http://nhancv.github.io/nqrcode/
+### QRCode generator: https://nhancv.github.io/nqrcode/
 
 ```
 Query params:
@@ -13,7 +13,7 @@ d: data
 w: width
 h: height
 ```
-Ex: `http://nhancv.github.io/nqrcode/?d=test.com&w=100&h=100`
+Ex: `https://nhancv.github.io/nqrcode/?d=test.com&w=100&h=100`
 
 
-### Tower Hanoi Game: http://nhancv.github.io/towerhanoi.swf
+### Tower Hanoi Game: https://nhancv.github.io/towerhanoi.swf
