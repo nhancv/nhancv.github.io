@@ -19,7 +19,7 @@
         <script src="./qrcode.min.js" type="text/javascript">
         </script>
         <script type="text/javascript">
-            /*************************************************
+        /*************************************************
          * // query string: ?foo=lorem&bar=&baz
          var foo = getParameterByName('foo'); // "lorem"
          var bar = getParameterByName('bar'); // "" (present with empty value)
@@ -34,14 +34,21 @@
                     if (!results) return null;
                     if (!results[2]) return '';
                     return decodeURIComponent(results[2].replace(/\+/g, " "));
-                };
+        };
 
+        //Remember format params url must be follow priority w=W&h=H&d= (d must place at last)
         function makeCode (qrCode) {
             var data = "http://nhancv.github.io";
-            var param = getParameterByName("d");
-            if(param != null && param.trim().length>0){
-                data = param;
+
+            var query = window.location.search;
+            var indexData = query.indexOf("d=");
+            if(indexData > -1) {
+                query = query.substring(indexData + 2).toString();
             }
+            if(query != null && query.trim().length>0){
+                data = query;
+            }
+
             qrCode.clear();
             qrCode.makeCode(data);
             $('#data').text(data);

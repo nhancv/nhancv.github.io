@@ -9,11 +9,13 @@
 ```
 Query params:
 
-d: data
 w: width
 h: height
+d: data
 ```
-Ex: `https://nhancv.github.io/nqrcode/?d=test.com&w=100&h=100`
+Ex: `https://nhancv.github.io/nqrcode/?w=100&h=100&d=test.com`
+
+*Remember format params url must be follow priority w=W&h=H&d= (d must place at last)*
 
 
 ### Tower Hanoi Game: https://nhancv.github.io/towerhanoi.swf
