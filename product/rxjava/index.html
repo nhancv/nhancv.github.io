@@ -1,0 +1,720 @@
+<html><head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="style.css" rel="stylesheet" type="text/css">
+        
+        <!-- https://highlightjs.org -->
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-99584571-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    </head><body>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>
+                            <b>Basic</b>
+                        </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Observable</h2>
+                            <p>In ReactiveX an observer subscribes to an Observable. Then that observer
+                                reacts to whatever item or sequence of items the Observable emits.&nbsp;Use
+                                three methods to subscribe
+                                <br>onNext
+                                <br>onError
+                                <br>onCompleted
+                                <br>
+                            </p>
+                        </div>
+                        <img src="./images/observable.png" class="img-responsive img-thumbnail" style="width: 500;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Observer</h2>
+                            <p>An observer subscribes to an Observable. An Observable emits items or
+                                sends notifications to its observers by calling the observers’ methods.</p>
+                        </div>
+                        <img src="./images/observable_observer.png" class="img-responsive img-thumbnail" style="width: 500;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>PublishSubject</h2>
+                            <p>PublishSubject emits to an observer only those items that are emitted
+                                by the source Observable(s) subsequent to the time of the subscription.</p>
+                        </div>
+                        <img src="http://reactivex.io/documentation/operators/images/S.PublishSubject.png" class="img-responsive img-thumbnail" style="width: 300;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Single</h2>
+                            <p>A Single is something like an Observable, but it always either emits one
+                                value or an error notification with&nbsp;only use two methods to subscribe
+                                <br>onSuccess
+                                <br>onError</p>
+                        </div>
+                        <img src="https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/Single.legend.png" class="img-responsive img-thumbnail" style="width: 700;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Scheduler</h2>
+                            <p>-&nbsp;The&nbsp;SubscribeOn&nbsp;operator designates which thread the
+                                Observable will begin operating on.
+                                <br>- The ObserveOn operator specifies a different Scheduler that the Observable
+                                will use to send notifications to its observers.</p>
+                        </div>
+                        <img src="http://reactivex.io/documentation/operators/images/schedulers.png" class="img-responsive img-thumbnail" style="width: 300;">
+                        <h3 contenteditable="true">Varieties of Scheduler</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Scheduler</th>
+                                    <th>purpose</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Schedulers.computation( )</td>
+                                    <td>meant for computational work such as event-loops and callback processing;
+                                        do not use this scheduler for I/O (use Schedulers.io( ) instead); the number
+                                        of threads, by default, is equal to the number of processors</td>
+                                </tr>
+                                <tr>
+                                    <td>Schedulers.from(executor)</td>
+                                    <td>uses the specified Executor as a Scheduler</td>
+                                </tr>
+                                <tr>
+                                    <td>Schedulers.immediate( )</td>
+                                    <td>schedules work to begin immediately in the current thread</td>
+                                </tr>
+                                <tr>
+                                    <td>Schedulers.io( )</td>
+                                    <td>meant for I/O-bound work such as asynchronous performance of blocking
+                                        I/O, this scheduler is backed by a thread-pool that will grow as needed</td>
+                                </tr>
+                                <tr>
+                                    <td>Schedulers.newThread( )</td>
+                                    <td>creates a new thread for each unit of work</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>
+                            <b>Operators &amp; Usages/Scenarios</b>
+                        </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 contenteditable="true">Creating Observables</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/create.html" target="_blank">create</a></td>
+                                    <td>
+                                        <div>create an Observable from scratch by calling observer methods programmatically<div>
+                                        <img src="http://reactivex.io/documentation/operators/images/create.c.png" class="img-responsive img-thumbnail" style="width: 300px">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/defer.html" target="_blank">defer</a></td>
+                                    <td>
+                                        <div>do not create the Observable until the observer subscribes, and create
+                                            a fresh Observable for each observer</div>
+                                        <img src="http://reactivex.io/documentation/operators/images/defer.c.png" class="img-responsive img-thumbnail" style="width: 300px">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/just.html" target="_blank">just</a></td>
+                                    <td>
+                                        <div>convert an object or a set of objects into an Observable that emits that
+                                        or those objects</div>
+                                        <img src="http://reactivex.io/documentation/operators/images/just.c.png" class="img-responsive img-thumbnail" style="width: 300px">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/from.html" target="_blank">from</a></td>
+                                    <td>
+                                        <div>convert some other object or data structure into an Observable</div>
+                                        <img src="http://reactivex.io/documentation/operators/images/from.c.png" class="img-responsive img-thumbnail" style="width: 300px">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Transforming Observables</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                    <th>Code snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/map.html" target="_blank">map</a></td>
+                                    <td>
+                                        <div>Transform the items emitted by an Observable by applying a function to
+                                        each item</div>
+                                        <iframe src="./operators/map.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .map(integer -> integer * 2)
+    .subscribe(System.out::println);
+
+Out:
+2
+4
+6                                       </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/flatmap.html" target="_blank">flatMap</a></td>
+                                    <td>
+                                        <div>Transform the items emitted by an Observable into Observables, then flatten
+                                            the emissions from those into a single Observable</div>
+                                        <img src="http://reactivex.io/documentation/operators/images/flatMap.c.png" class="img-responsive img-thumbnail" style="width: 400px">
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .flatMap(integer -> Observable.range(4,2))
+    .subscribe(System.out::println);
+
+Out:
+4
+5
+4
+5
+4
+5                                      </code></pre>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Filtering Observables</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                    <th>Code snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/debounce.html" target="_blank">debounce</a></td>
+                                    <td>
+                                        <div>Only emit an item from an Observable if a particular timespan has passed
+                                        without it emitting another item</div>
+                                        <iframe src="./operators/debounce.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .debounce(1, TimeUnit.SECONDS)
+    .subscribe(System.out::println);
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/distinct.html" target="_blank">distinct</a></td>
+                                    <td>
+                                        <div>Suppress duplicate items emitted by an Observable</div>
+                                        <iframe src="./operators/distinct.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 1, 3))
+    .distinct()
+    .subscribe(System.out::println);
+
+Out:
+1
+3
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/elementat.html" target="_blank">elementAt</a></td>
+                                    <td>
+                                        <div>Emit only item n emitted by an Observable</div>
+                                        <iframe src="./operators/elementAt.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .elementAt(1)
+    .subscribe(System.out::println);
+
+Out:
+2
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/filter.html" target="_blank">filter</a></td>
+                                    <td>
+                                        <div>Emit only those items from an Observable that pass a predicate test</div>
+                                        <iframe src="./operators/filter.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .filter(integer -> integer > 2)
+    .subscribe(System.out::println);
+
+Out:
+3
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/first.html" target="_blank">first</a></td>
+                                    <td>
+                                        <div>Emit only the first item, or the first item that meets a condition, from
+                                        an Observable</div>
+                                        <iframe src="./operators/first.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .first(integer -> integer > 2)
+    .subscribe(System.out::println);
+
+Out:
+3
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/last.html" target="_blank">last</a></td>
+                                    <td>
+                                        <div>Emit only the last item emitted by an Observable</div>
+                                        <iframe src="./operators/last.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .last()
+    .subscribe(System.out::println);
+
+Out:
+3
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/skip.html" target="_blank">skip</a></td>
+                                    <td>
+                                        <div>Suppress the first n items emitted by an Observable</div>
+                                        <iframe src="./operators/skip.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .skip(1)
+    .subscribe(System.out::println);
+
+Out:
+2
+3
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/skiplast.html" target="_blank">skipLast</a></td>
+                                    <td>
+                                        <div>Suppress the last n items emitted by an Observable</div>
+                                        <iframe src="./operators/skipLast.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .skipLast(1)
+    .subscribe(System.out::println);
+
+Out:
+1
+2
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/take.html" target="_blank">take</a></td>
+                                    <td>
+                                        <div>Emit only the first n items emitted by an Observable</div>
+                                        <iframe src="./operators/take.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .take(1)
+    .subscribe(System.out::println);
+
+Out:
+1
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/takelast.html" target="_blank">takeLast</a></td>
+                                    <td>
+                                        <div>Emit only the last n items emitted by an Observable</div>
+                                        <iframe src="./operators/takeLast.html" width="100%" height="320px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.defer(() -> Observable.just(1, 2, 3))
+    .takeLast(1)
+    .subscribe(System.out::println);
+
+Out:
+3
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <h3>Combining Observables</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                    <th>Code snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/merge.html" target="_blank">merge</a></td>
+                                    <td>
+                                        <div>Combine multiple Observables into one by merging their emissions</div>
+                                        <iframe src="./operators/merge.html" width="100%" height="380px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.merge(Observable.just(1,2), Observable.just(3))
+    .subscribe(System.out::println);
+
+Out:
+1
+2
+3
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/zip.html" target="_blank">zip</a></td>
+                                    <td>
+                                        <div>Combine the emissions of multiple Observables together via a&nbsp;specified
+                                        function and&nbsp;
+                                        <br>emit single items for&nbsp;each&nbsp;combination based on the results
+                                        of this function</div>
+                                        <iframe src="./operators/zip.html" width="100%" height="380px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.zip(
+    Observable.just(1, 2),
+    Observable.just(3, 4),
+    (Func2<Integer, Integer, Object>) 
+            (integer, integer2) -> integer + "" - "" + integer2)
+    .subscribe(System.out::println);
+
+Out:
+1 - 3
+2 - 4
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <h3>Conditional and Boolean Operators</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Definition</th>
+                                    <th>Code snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a class="link btn" href="http://reactivex.io/documentation/operators/amb.html" target="_blank">amb</a></td>
+                                    <td>
+                                        <div>Given two or more source Observables, emit all of the items from only
+                                        the first of
+                                        <br>&nbsp;these Observables to emit an item</div>
+                                        <iframe src="./operators/amb.html" width="100%" height="500px" frameBorder="0" ></iframe>
+                                    </td>
+                                    <td>
+                                        <pre><code class="java"> 
+Observable.amb(
+    Observable.just(1).delay(1, TimeUnit.SECONDS),
+    Observable.just(2, 3))
+    .subscribe(System.out::println);
+
+Out:
+2
+3
+                                        </code></pre>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>
+                            <b>Useful Scenarios</b>
+                        </h1>
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Scenarios</th>
+                                        <th>Code snippet</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Avoid create Observable with just like below:
+
+                                        <pre><code class="java"> 
+public Observable valueObservable() {  
+    return Observable.just(value);  
+}   
+                                        </code></pre>
+
+                                            <br>Because&nbsp;just(), from(), and other Observable creation tools&nbsp;
+                                            <br>store the value of data when created,&nbsp;not when subscribed
+                                            <br>
+                                            <br>
+                                        </td>
+                                        <td>Sol1:
+
+                                        <pre><code class="java"> 
+public Observable valueObservable() {  
+    return Observable.create(subscriber -> {  
+        subscriber.onNext(value);  
+        subscriber.onCompleted();  
+    });  
+} 
+                                        </code></pre>
+
+                                            <br>Sol2:
+
+                                        <pre><code class="java"> 
+public Observable valueObservable() {  
+    return Observable.defer( 
+        () -> Observable.just(value) 
+    );  
+}
+                                        </code></pre>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>How to make interceptor response with rxjava.&nbsp;
+                                            <br>Support if you want to catch the error and wrap it as&nbsp;difference
+                                            error type.&nbsp;
+                                        </td>
+                                        <td>
+                                            
+                                        <pre><code class="java"> 
+Observable.defer(() -> service.listRepos("nhancv")) 
+         .observeOn(Schedulers.computation())  
+         //Interceptor on next  
+         .flatMap(Observable::just)  
+
+         //Interceptor on error  
+         .onErrorResumeNext(throwable -> {  
+                  Exception exception = new Exception("new custom error");  
+                  Log.e(TAG, "call: " + throwable);  
+                  return Observable.error(exception);  
+         })  
+
+         //Final data 
+         .subscribeOn(Schedulers.io())  
+         .observeOn(AndroidSchedulers.mainThread()) 
+         .subscribe(repoList -> {  
+                  updateText("Done: " + repoList.size());  
+         }, throwable -> {  
+                  Log.e(TAG, "fetchGithub: " + throwable);  
+         });
+                                        </code></pre>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Example about call rest api</td>
+                                        <td>
+
+                                        <pre><code class="java"> 
+RxHelper.onStop(subscription);  
+getView().showLoading();  
+subscription = accountService 
+                      .register(registerRequest)  
+                      .compose(RxHelper.applyIOSchedulers())  
+                      .doOnTerminate(() -> getView().hideLoading()) 
+                       .subscribe( 
+         user -> getView().registerSuccessful(user),  
+         throwable -> getView().registerError(throwable)  
+);
+                                        </code></pre>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>If you call api and do not care about response success,&nbsp;
+                                            <br>can use terminal error snippet code at right</td>
+                                        <td>
+
+                                        <pre><code class="java"> 
+subscription = accountService 
+                  .logout()  
+                  .compose(RxHelper.applyIOSchedulers())  
+                  .doOnTerminate(() -> {  
+                           accountService.setCurrentUser(null);  
+                           getView().hideLoading();  
+                           getView().afterLogout();  
+                  })  
+                  .onErrorResumeNext(throwable -> Observable.empty())  
+                  .subscribe();
+                                        </code></pre>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h2>Ref</h2>
+                            <p>
+                                <a href="http://reactivex.io/">http://reactivex.io/</a>
+                                <br>
+                                <a href="http://reactivex.io/">http://rxmarbles.com/</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://github.com/ReactiveX/RxAndroid</a>
+                                <br>
+                                <a href="http://reactivex.io/">http://docs.couchbase.com/developer/java-2.0/observables.html</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://medium.com/crunching-rxandroid</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://medium.freecodecamp.com/rxandroid-and-retrofit-2-0-66dc52725fff</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://medium.com/swlh/party-tricks-with-rxjava-rxandroid-retrolambda-1b06ed7cd29c</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://blog.robinchutaux.com/blog/a-smart-way-to-use-retrofit/</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://blog.robinchutaux.com/blog/using-retrofit-with-activeandroid/</a>
+                                <br>
+                                <a href="http://reactivex.io/">http://blog.danlew.net/tag/rxjava/</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://realm.io/news/droidcon-gomez-functional-reactive-programming/</a>
+                                <br>
+                                <a href="http://reactivex.io/">https://www.bignerdranch.com/blog/what-is-functional-reactive-programming/</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</body></html>

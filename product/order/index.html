@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>Nhan Cao</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Order drinks">
+    <meta name="author" content="Nhan Cao">
+
+    <link rel="shortcut icon" href="../../favicon.ico">
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
+
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/order.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="assets/plugins/html5shiv.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-99584571-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+    <!-- Javascript -->
+    <script src="assets/plugins/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            "rules": {
+                ".read": true,
+                ".write": true
+            },
+            apiKey: "AIzaSyCqX7JdbnjkmxDxq6Yps0dkfkd_Wm9zE60",
+            authDomain: "drink-order.firebaseapp.com",
+            databaseURL: "https://drink-order.firebaseio.com",
+            projectId: "drink-order",
+            storageBucket: "",
+            messagingSenderId: "695508235343"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=736524826509698";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <script type="text/javascript" src="assets/plugins/angular/angular.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/angular/ngStorage.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="assets/plugins/angular/xeditable/xeditable.min.css">
+    <script type="text/javascript" src="assets/plugins/angular/xeditable/xeditable.min.js"></script>
+
+    <link rel="stylesheet" href="assets/plugins/angular/toastr/angular-toastr.min.css">
+    <script type="text/javascript" src="assets/plugins/angular/toastr/angular-toastr.tpls.js"></script>
+
+    <link rel="stylesheet" href="assets/plugins/ui-select/ui-select.min.css" media="screen">
+    <script type="text/javascript" src="assets/plugins/ui-select/ui-select.min.js"></script>
+
+    <script type="text/javascript" src="assets/plugins/pdfmake.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/html2canvas.min.js"></script>
+
+    <!-- custom js -->
+    <script type="text/javascript" src="assets/js/order.js"></script>
+    <script type="text/javascript" src="assets/js/models.js"></script>
+    <script type="text/javascript" src="assets/js/services.js"></script>
+    <script type="text/javascript" src="assets/js/filters.js"></script>
+
+</head>
+
+<body ng-controller="appController">
+<div class="container">
+
+    <div class="text-center" ng-show="isLoading">
+        <i class="fa fa-spinner fa-spin center" style="font-size:24px;color:red"></i>
+    </div>
+
+    <div ng-show="screen === 'HOME'" style="width: 75%; margin: auto">
+
+        <h3>Create order list</h3>
+        <br>
+        <div class="well" ng-show="groupCreated">
+            <h5>Share menu link </h5>
+            <a class="btn btn-info" target="_blank" href="{{group.config.link}}MENU">MENU</a>
+            <a class="btn btn-info" target="_blank" href="{{group.config.link}}DASHBOARD">DASHBOARD</a>
+            <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
+        </div>
+        <form>
+            <div class="form-group">
+                <label>List name</label>
+                <input class="form-control" ng-model="group.config.name">
+            </div>
+            <div class="form-group">
+                <label>Menu</label>
+                <select class="form-control" ng-model="group.config.menu">
+                    <option ng-repeat="(key, value) in menuList track by $index" value="{{key}}">{{value.contact.title}}</option>
+                </select>
+            </div>
+            <button ng-show="!groupCreated && group.config.name !== null" class="btn btn-primary"
+                    ng-click="onCreateList()">
+                Create
+            </button>
+        </form>
+
+
+    </div>
+
+    <div ng-show="screen === 'MENU' && groupConfig.name">
+        <div>
+            <h2>{{groupConfig.name}}</h2>
+            <h4>{{groupConfig.date}}</h4>
+            <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
+            <div class="alert alert-warning">
+                <strong>Instruction:</strong> Select your favorite item by "Order", fill your name and click "Book". DONE!!!
+            </div>
+        </div>
+        <div class="alert alert-info">
+            <h3>{{menuContact.title}}</h3>
+            Link: <a href="{{menuContact.link}}" target="_blank">{{menuContact.link}}</a><br>
+            Address: {{menuContact.address}}<br>
+            Open time: {{menuContact.openTime}}<br>
+            Phone: {{menuContact.phone}}<br>
+        </div>
+
+        <div ng-show="menuLocalOrders.length>0">
+            <h3>Your orders</h3>
+            <div class="menu-table">
+                <div class="tbl-header">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                        <tr>
+                            <td style="width: 50px">STT</td>
+                            <td>Name</td>
+                            <td>Quantity</td>
+                            <td>Drink name</td>
+                            <td>Drink price: {{menuTotalPrice | fPrice}}</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tbl-content">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tr ng-repeat="item in menuLocalOrders track by $index">
+                            <td style="width: 50px">{{$index + 1}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.orderQuantity}}</td>
+                            <td>{{item.drinkName}}</td>
+                            <td>{{item.drinkPrice | fPrice}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+        </div>
+        <br>
+
+        <h3>Menu</h3>
+        <div class="menu-table">
+            <div class="tbl-header">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                    <tr>
+                        <td style="width: 50px">STT</td>
+                        <td>Name</td>
+                        <td>Price</td>
+                        <td style="width: 50%" ng-show="!groupConfig.finish">Action</td>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tbl-content">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr ng-repeat="item in drinkItems track by $index">
+                        <td style="width: 50px">{{$index + 1}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.price | fPrice}}</td>
+                        <td style="width: 50%" ng-show="!groupConfig.finish">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <button type="button"
+                                            ng-click="menuShowOrderForm != $index + 1 ? menuShowOrderForm = $index + 1 : menuShowOrderForm = 0 "
+                                            class="btn btn-primary">Order
+                                    </button>
+                                </div>
+                                <div class="form-group" ng-show="menuShowOrderForm == $index + 1">
+                                    <input class="form-control" ng-model="menuOrderInfo.name" placeholder="Order name">
+                                </div>
+                                <div class="form-group" ng-show="menuShowOrderForm == $index + 1">
+                                    <input style="width: 80px;" type="number"
+                                           class="form-control" ng-model="menuOrderInfo.quantity"
+                                           placeholder="Quantity">
+                                </div>
+                                <div class="form-group"
+                                     ng-show="menuShowOrderForm == $index + 1 && menuOrderInfo.name"
+                                >
+                                    <button class="btn btn-warning"
+                                            ng-click="onMenuOrderItem(item); menuShowOrderForm = 0">
+                                        Book
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="screen === 'DASHBOARD' && groupConfig.name">
+        <div>
+            <h2>{{groupConfig.name}}</h2>
+            <h4>{{groupConfig.date}}</h4>
+            <a class="btn btn-info" target="_blank" href="{{groupConfig.link}}MENU">MENU</a>
+            <button ng-show="!groupConfig.finish" class="btn btn-warning" ng-click="onDashboardFinishOrder(true)">
+                FINISH
+            </button>
+            <button ng-show="groupConfig.finish" class="btn btn-warning" ng-click="onDashboardFinishOrder(false)">
+                RE-EDIT
+            </button>
+            <fb-send page-href="{{groupSendLink}}">SEND</fb-send>
+        </div>
+        <hr>
+        <h3>ORDER LIST</h3>
+        <form editable-form name="tableform" onaftersave="onDashboardSaveTable()" oncancel="onDashboardCancelChange()"
+              onbefore>
+            <!-- table -->
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-condensed table-striped">
+                    <thead>
+                    <tr style="font-weight: bold">
+                        <td style="width:50px">STT</td>
+                        <td style="width:40%">Name</td>
+                        <td style="width:30%">Drink</td>
+                        <td style="width:30%">Price</td>
+                        <td style="width:30%">Qty</td>
+                        <td style="width:30%">Time</td>
+                        <td style="width:30%" ng-show="!groupConfig.finish"><span>Action</span></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="order in orderItems | filter:onDashboardFilterOrder track by $index">
+                        <td>{{$index+1}}</td>
+                        <td style="min-width:150px">
+                            <span editable-text="order.name" e-style="width:100%;" e-form="tableform"
+                                  onbeforesave="onDashBoardValidateEmpty($data)">
+                                {{ order.name || 'empty' }}
+                            </span>
+                        </td>
+                        <td>
+                            <div editable-ui-select="order.drinkName"
+                                 data-e-form="tableform"
+                                 data-e-name="drinkName"
+                                 e-ng-change="onDashboardDrinkSelect(order, $data)"
+                                 name="drinkName"
+                                 theme="bootstrap"
+                                 data-e-ng-model="order.drinkName"
+                                 data-e-style="min-width:300px;">
+                                {{order.drinkName || 'empty' }}
+                                <editable-ui-select-match placeholder="select drink">
+                                    {{$select.selected}}
+                                </editable-ui-select-match>
+                                <editable-ui-select-choices
+                                        repeat="item in dashboardGetDrinkItemNames() | fDrinkSearch: $select.search track by $index">
+                                    {{item}}
+                                </editable-ui-select-choices>
+                            </div>
+                        </td>
+                        <td style="min-width:60px">
+                         <span editable-number="order.drinkPrice" e-form="tableform">
+                            {{(order.drinkPrice | fPrice) || 'empty'}}
+                         </span>
+                        </td>
+                        <td style="min-width:60px">
+                         <span editable-number="order.orderQuantity" e-form="tableform"
+                               onbeforesave="onDashBoardValidateQuantity($data)">
+                            {{(order.orderQuantity) || 'empty'}}
+                        </span>
+                        </td>
+                        <td>
+                            {{order.time | fTime}}
+                        </td>
+                        <td ng-show="!groupConfig.finish">
+                            <button ng-show="tableform.$visible" type="button" ng-show="tableform.$visible"
+                                    ng-click="onDashboardRemoveOrder(order.id)"
+                                    class="btn btn-danger pull-right">REMOVE
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- buttons -->
+            <div class="btn-edit">
+                <button type="button" class="btn btn-primary" ng-show="!tableform.$visible && !groupConfig.finish"
+                        ng-click="onDashboardEditOrder(tableform)">
+                    Edit
+                </button>
+            </div>
+            <div class="btn-form" ng-show="tableform.$visible">
+                <button type="button" ng-disabled="tableform.$waiting" ng-click="onDashboardAddOrder()"
+                        class="btn btn-success">
+                    Add row
+                </button>
+                <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">
+                    Save
+                </button>
+                <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()"
+                        class="btn btn-warning">
+                    Cancel
+                </button>
+                <button type="button" ng-disabled="tableform.$waiting" ng-click="onDashboardClearAllOrder(tableform)"
+                        class="btn btn-danger">
+                    Clear all
+                </button>
+            </div>
+
+        </form>
+        <br>
+
+        <div id="export">
+
+            <h3>SUMMARY</h3>
+            <table class="table table-bordered table-hover table-condensed table-striped">
+                <thead>
+                <tr style="font-weight: bold">
+                    <td>STT</td>
+                    <td>Drink name</td>
+
+                    <td class="hidden-xs">Drink price</td>
+                    <td class="visible-xs">Price</td>
+
+                    <td class="hidden-xs">Quantity</td>
+                    <td class="visible-xs">Qty</td>
+                    <td class="hidden-xs">Order names</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="(key, order) in summaryList track by $index">
+                    <td>{{$index + 1}}</td>
+                    <td>{{order.drinkName}}</td>
+                    <td>{{order.drinkPrice | fPrice}}</td>
+                    <td>{{order.orderQuantity}}</td>
+                    <td class="hidden-xs">{{order.orderName}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <h5>Total quantity: {{totalQuantity}}</h5>
+            <h5>Total price: {{totalPrice | fPrice}}</h5>
+        </div>
+        <button class="btn btn-info" ng-click="dashBoardExport()">Export</button>
+        <button class="btn btn-danger" ng-click="onDashboardDestroyOrder()">Destroy</button>
+        <br>
+    </div>
+
+    <footer class="footer">
+        <div class="text-center">
+            <small>---- Nhan Cao ----</small>
+            <br>
+            <hr>
+        </div>
+    </footer>
+</div>
+</body>
+</html> 
+
