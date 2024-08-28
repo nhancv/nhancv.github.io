@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <!--SEO-->
+        <title>
+            QRCode
+        </title>
+        <meta content="tools, qrcode, generator" name="keywords"/>
+        <meta content="15" name="revisit-after"/>
+        <meta content="EN" name="language"/>
+        <meta content="© 2017 Nhan Cao" name="copyright"/>
+        <meta content="All" name="robots"/>
+        <meta content="Nhan Cao" name="author"/>
+        <meta content="QRCode generate" name="description"/>
+        <script src="./jquery.min.js" type="text/javascript">
+        </script>
+        <script src="./qrcode.min.js" type="text/javascript">
+        </script>
+        <script type="text/javascript">
+        /*************************************************
+         * // query string: ?foo=lorem&bar=&baz
+         var foo = getParameterByName('foo'); // "lorem"
+         var bar = getParameterByName('bar'); // "" (present with empty value)
+         var baz = getParameterByName('baz'); // "" (present with no value)
+         var qux = getParameterByName('qux'); // null (absent)
+         */
+        function getParameterByName(name, url) {
+                    if (!url) url = window.location.href;
+                    name = name.replace(/[\[\]]/g, "\\$&");
+                    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                        results = regex.exec(url);
+                    if (!results) return null;
+                    if (!results[2]) return '';
+                    return decodeURIComponent(results[2].replace(/\+/g, " "));
+        };
+
+        //Remember format params url must be follow priority w=W&h=H&d= (d must place at last)
+        function makeCode (qrCode) {
+            var data = "http://nhancv.github.io";
+
+            var query = window.location.search;
+            var indexData = query.indexOf("d=");
+            if(indexData > -1) {
+                query = query.substring(indexData + 2).toString();
+            }
+            if(query != null && query.trim().length>0){
+                data = query;
+            }
+            data = decodeURIComponent(data);
+
+            qrCode.clear();
+            qrCode.makeCode(data);
+            $('#data').text(data);
+        }
+        </script>
+    </head>
+</html>
+<body style="text-align: center;">
+    <div id="qrcode" style="margin: auto; width:300px; height:300px;">
+    </div>
+    <h2 id="data">
+    </h2>
+    <script type="text/javascript">
+        var _width = 300;
+        var paramW = parseInt(getParameterByName("w"));
+        if(Number.isInteger(paramW)) {
+                _width = paramW;
+        }
+        var _height = 300;
+        var paramH = parseInt(getParameterByName("h"));
+        if(Number.isInteger(paramH)) {
+                _height = paramH;
+        }
+
+        $("#qrcode").width( _width );
+        $("#qrcode").height( _height );
+
+        var qrCode = new QRCode(document.getElementById("qrcode"), {width : _width,height : _height, colorDark : "#000000",colorLight : "#ffffff",correctLevel : QRCode.CorrectLevel.H});
+        makeCode(qrCode);
+    </script>
+</body>
